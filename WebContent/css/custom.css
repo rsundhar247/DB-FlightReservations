@@ -1,0 +1,145 @@
+@CHARSET "utf-8";
+* {
+	padding: 0;
+	margin: 0;
+}
+html, body{
+	background-image: url('../img/bg.jpg');
+	width: 100%;
+}
+.content {
+	margin: 0 auto;
+	max-width: 67.5em;
+}
+header {
+	text-align: center;
+	padding: 1em;
+}
+.row {
+	overflow: hidden;
+	position: relative;
+}
+.loginarea {
+	padding: 1% 11%;
+    margin-top: 3%;
+    width: 28%;
+    float: left;
+    overflow: hidden;
+}
+.loginarea .infoarea, .loginarea .loginform {
+	background-color: #fff;
+    padding: 0.5em 1em;
+    /*width: 270px;*/
+}
+.loginarea .loginform {
+	background-color: #eee;
+}
+.signupArea {
+	padding: 1% 11%;
+    margin-top: 3%;
+    width: 28%;
+    float: left;
+    overflow: hidden;
+}
+.signupArea .infoarea,.signupArea .signUpForm {
+	background-color: #fff;
+    padding: 0.5em 1em;
+    /*width: 270px;*/
+}
+.signupArea .signUpForm {
+	background-color: #eee;
+}
+.fullwidthbtn {
+	width: 100%;
+}
+.loginarea label {
+	cursor: pointer;
+	display: block;
+	font-size: 1em;
+	margin-bottom: 5px;
+}
+.loginarea input,.signupArea input {
+	border: 1px solid #fff;
+	outline: none;
+	padding: 3%;
+	font-size: 0.875em;
+	letter-spacing: 1px;
+	margin-bottom: 1em;
+	width: 92%;
+}
+.loginarea input:focus,.signupArea input:focus {
+	border: 1px solid #888;
+	box-shadow: 5px 3px 10px #d8d8d8;
+}
+.loginarea .link {
+	color: #000;
+	display: inline-block;
+	margin-top: 3%;
+	text-decoration: none;
+}
+.loginarea .link:hover {
+	color: #35B2C0;
+	text-decoration: underline;
+}
+.loginarea p,.signupArea p {
+	margin: 10px 0;
+}
+#errorMsg, .error {
+	color: #f00;
+}
+.btn {
+	background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+	border-radius: 0 5px;
+	color: #fff;
+	cursor: pointer;
+	outline: none;
+	padding: 3%;
+	font-weight: bold;
+	border: 1px solid #b6b6b6;	
+}
+.btn:hover {
+	border: 1px solid #888;
+	box-shadow: 5px 3px 10px #d8d8d8;
+}
+.btn:active {
+	border: 1px solid #888;
+}
+/*SignUp file*/
+.signupArea {
+	
+}
+
+/*SignUp file*/
+/*Welcome file*/
+.userInfoArea {
+	margin: 0 auto;
+	max-width: 67.5em;
+	width: 450px;
+}
+.userInfoArea .statusMsg {
+	font-size: 1.25em;
+	margin: 1em 0;
+}
+.userInfoArea ul {
+	border: 1px solid #b6b6b6;
+}
+.userInfoArea ul li {
+	list-style: none;
+	border-bottom: 1px solid #b6b6b6;	
+}
+.userInfoArea ul li:last-child {
+	border-bottom: none;
+}
+.userInfoArea ul li span {
+	border-left: 1px solid #b6b6b6;
+	display: inline-block;
+	width: 200px;
+	padding: 5px;
+}
+.userInfoArea ul li span:first-child {
+	border-left: none;
+}
+.userInfoArea .loginLink {
+	margin: 1em 0;
+}
+/*Welcome file*/

@@ -1,0 +1,44 @@
+@CHARSET "utf-8";
+.resetpwdarea {
+	padding: 1% 11%;
+    margin-top: 3%;
+    width: 28%;
+    float: left;
+    overflow: hidden;
+}
+.resetpwdarea .infoarea, .resetpwdarea .pwdresetform {
+	background-color: #fff;
+    padding: 0.5em 1em;
+}
+.resetpwdarea .pwdresetform {
+	background-color: #eee;
+}
+.resetpwdarea label {
+	cursor: pointer;
+	display: block;
+	font-size: 1em;
+	margin-bottom: 5px;
+}
+.resetpwdarea input {
+	border: 1px solid #fff;
+	outline: none;
+	padding: 3%;
+	font-size: 0.875em;
+    letter-spacing: 1px;
+	margin-bottom: 1em;
+	width: 92%;
+}
+.resetpwdarea input:focus {
+	border: 1px solid #888;
+	box-shadow: 5px 3px 10px #d8d8d8;
+}
+.resetpwdarea .link {
+	color: #000;
+	display: inline-block;
+	margin-top: 3%;
+	text-decoration: none;
+}
+.resetpwdarea .link:hover {
+	color: #35B2C0;
+	text-decoration: underline;
+}
