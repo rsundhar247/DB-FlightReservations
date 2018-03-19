@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Geek Reservations - Book Tickets</title>
+<title>Geek Reservations - My Account</title>
 <script src="js/library/jquery-1.11.1.min.js"></script>
 
 <style>
@@ -70,7 +70,7 @@ nav ul li a:hover{
 <body>
 	<section class="content">
 	<header>
-		<h1>Geek Users Book Tickets</h1>
+		<h1>Geek Users - My Account</h1>
 	</header>
 			<div class="leftnav">
 				<nav>

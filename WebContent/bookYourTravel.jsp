@@ -100,6 +100,9 @@ select {padding:0.5%; margin-right: 5%;}
 			<div class="row rightNav">
 				<div class="bookTktsArea">
 					<div class="bookTktsform">
+						<div class = "row">
+							<label id="bookTktsError" class="error">&nbsp;</label>
+						</div>
 						<div class="travelType">
 							<input type="radio" name="travelWay" checked id="travelWay1" value="oneWay"> <label for="travelWay1">One Way</label>
 							<input type="radio" name="travelWay" id="travelWay2" value="roundTrip"> <label for="travelWay2">Round Trip</label>
@@ -111,7 +114,7 @@ select {padding:0.5%; margin-right: 5%;}
 							</div>
 							<div class="dateSelect">
 								<label for="depDate" class="date">Departure Date :</label> <input type="date" name="depDate" id="depDate"> <br/>
-								<label for="arvDate" class="date rDate" id="rDateLabel"> Return Date :</label> <input type="date" name="arvDate" id="arvDate" class="rDate">
+								<label for="returnDate" class="date rDate" id="rDateLabel"> Return Date :</label> <input type="date" name="returnDate" id="returnDate" class="rDate">
 							</div>
 							<div class="classType">
 								<label for="prefClass" class="date">	Preffered Class : </label>
@@ -151,15 +154,18 @@ select {padding:0.5%; margin-right: 5%;}
 			</div>
 		</section>
 	</section>
+	
+	<script src="js/bookYourTravel.js"></script>
+	
 </body>
 <script>
 $(document).ready(function(){
 	$("input[name='travelWay']").on("click",function(){
 		var trType=$(this).val();
 		if(trType=='roundTrip')
-			$("#arvDate,#rDateLabel").removeClass('rDate');
+			$("#returnDate,#rDateLabel").removeClass('rDate');
 		else 
-			$("#arvDate,#rDateLabel").addClass('rDate');
+			$("#returnDate,#rDateLabel").addClass('rDate');
 	});
 });
 </script>

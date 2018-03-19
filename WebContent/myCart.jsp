@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Geek Reservations - Bookings</title>
+<title>Geek Reservations - Your Cart</title>
 <script src="js/library/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" href="css/reset.css" />
 <style>
@@ -83,13 +83,11 @@ select {padding:0.5%; margin-right: 5%;}
 </style>
 </head>
 <body>
-
-
 	<section class="container">
+		<header>
+			<h1>Geek Users Your Cart</h1>
+		</header>
 		<section class="content maincontainer">
-			<header>
-				<h1>Geek Users - Bookings</h1>
-			</header>
 			<div class="leftnav">
 				<nav>
 					<ul>
@@ -100,59 +98,30 @@ select {padding:0.5%; margin-right: 5%;}
 				</nav>
 			</div>
 			<div class="row rightNav">
-				
-				
-				
-			<table style="width:100%">
-			  <tr>
-			    <th>Date</th>
-			    <th>Airline Name</th> 
-			    <th>Airline Code</th>
-			    <th>Departure City</th>
-			    <th>Arrival City</th>
-			    <th>Departure Time</th>
-			    <th>Arrival Time</th>
-			    <th>Travel Time</th>
-			    <th>Passengers Name</th>
-			    <th>E-Ticket No.</th>
-			    <th>Class</th>
-			  </tr>
-			  <tr>
-			    <td>20-Mar</td>
-			    <td>American Airlines</td> 
-			    <td>AA123</td>
-			    <td>New York</td>
-			    <td>London</td>
-			    <td>21:45</td>
-			    <td>06:45</td>
-			    <td>09:00</td>
-				<td>John Smith</td>
-				<td>PUY789</td>
-				<td>Economy</td>
-			  </tr>
-			  <tr>
-			    <td>20-Jun</td>
-			    <td>British Airlines</td> 
-			    <td>BA143</td>
-			    <td>London</td>
-			    <td>Chicago</td>
-			    <td>08:45</td>
-			    <td>15:45</td>
-			    <td>07:00</td>
-				<td>John Smith</td>
-				<td>PQW345</td>
-				<td>First Class</td>
-			  </tr>
-			</table>				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				<div class="confirmTktsArea">
+					<div class="dispTktsArea">
+						You are Booking American Airlines - Between New York and Chicago - 20 Mar - 09:00 to 17:00<br><br><br><br><br><br><br><br>
+					</div>
+					
+					<div class="ccPaymentArea">
+						<label for="ccPaymentForm">Enter Credit Card Information</label><br>
+						<div class="ccPaymentForm">
+							<label for="ccNumber">Credit Card Number</label>
+							<input type="number" name="ccNumber" id="ccNumber" placeholder="Credit Card Number" />
+							<label for="ccExp">Expiration Date</label>
+							<input type="text" name="ccExp" id="ccExp" placeholder="Exp - MM/YY" />
+							<label for="ccCVV">CVV</label>
+							<input type="number" name="ccCVV" id="ccCVV" placeholder="CVV Number" />
+							<label for="ccName">CC Holder Name</label>
+							<input type="text" name="ccName" id="ccName" placeholder="Name" />
+							
+							<div class="bookbtn">
+								<button id="confirmTkts" class="fullwidthbtn btn">Book</button>
+							</div>
+							
+						</div>
+					</div>
+				</div>
 				
 			</div>
 		</section>

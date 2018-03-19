@@ -36,8 +36,27 @@
     	<url-pattern>/MyAccountDetails</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+    	<servlet-name>BookTravelServlet</servlet-name>
+    	<servlet-class>edu.rutgers.cs539.BookYourTravel</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>BookTravelServlet</servlet-name>
+    	<url-pattern>/BookTravel</url-pattern>
+	</servlet-mapping>
 	
+	<servlet>
+    	<servlet-name>FlightsReservationServlet</servlet-name>
+    	<servlet-class>edu.rutgers.cs539.FlightsReservation</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>FlightsReservationServlet</servlet-name>
+    	<url-pattern>/FlightsReservation</url-pattern>
+	</servlet-mapping>
 	
+		
 	
 	
 	<servlet>
@@ -60,4 +79,33 @@
     	<url-pattern>/bookYourTravel</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+    	<servlet-name>MyBookingsJSP</servlet-name>
+    	<jsp-file>/myBookings.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>MyBookingsJSP</servlet-name>
+    	<url-pattern>/myBookings</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>ViewFlightsJSP</servlet-name>
+    	<jsp-file>/viewFlights.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>ViewFlightsJSP</servlet-name>
+    	<url-pattern>/viewFlights</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>MyCartJSP</servlet-name>
+    	<jsp-file>/myCart.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+    	<servlet-name>MyCartJSP</servlet-name>
+    	<url-pattern>/myCart</url-pattern>
+	</servlet-mapping>
 </web-app> 
