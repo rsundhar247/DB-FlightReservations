@@ -27,8 +27,10 @@ $(document).ready(function(){
 	        },
 	        success: function(data){
 	        	if(data != null){
-	        		if(data == "Successful"){
+	        		if(data == "Customer Login Successful"){
 	        			window.location = "http://localhost:8080/FlightReservation/myAccount";
+	        		} else if(data == "Manager Login Successful"){
+	        			window.location = "http://localhost:8080/FlightReservation/manager/viewCustomers";
 	        		} else if(data == "Not Successful"){
 	        			document.getElementById("logInErrorMsg").innerHTML = "EmailId and Password Combination is wrong";
 	        		} else {

@@ -50,7 +50,7 @@ public class LogonForm extends HttpServlet {
 			Connection con = DriverManager.getConnection(url, "admin", "database");
 			Statement stmt = con.createStatement();
 			
-			String query = "Select lower(EmailAddress) from Users where lower(EmailAddress) ='" + emailId.toLowerCase() + "' and Password ='" + userPwd + "'";
+			String query = "Select lower(EmailAddress),userType from Users where lower(EmailAddress) ='" + emailId.toLowerCase() + "' and Password ='" + userPwd + "'";
 			/*String query = "Select EmailAddress from Users where lower(EmailAddress) = ? and Password = ?;";
 			PreparedStatement pst = con.prepareStatement(query);
 			pst.setString(1, emailId.toLowerCase());
@@ -59,9 +59,19 @@ public class LogonForm extends HttpServlet {
 			
 			if(result.next()){
 				String email = result.getString(1);	
+				String userType = result.getString(2);
 				if(email.equals(emailId)){
-					System.out.println("Login Successful");
-					json = new Gson().toJson("Successful");
+					
+					System.out.println("UserType : " + userType);
+					
+					if(userType.equals("manager")) {
+						System.out.println(emailId + " Manager Login Successful");
+						json = new Gson().toJson("Manager Login Successful");
+					} else {
+						System.out.println(emailId + " Customer Login Successful");
+						json = new Gson().toJson("Customer Login Successful");
+					} 
+					
 
 				} 
 			} else {

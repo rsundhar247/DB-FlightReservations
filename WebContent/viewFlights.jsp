@@ -85,20 +85,20 @@ select {padding:0.5%; margin-right: 5%;}
 <body>
 	<section class="container">
 		<header>
-			<h1>Geek Users View Flights</h1>
+			<h1>Geek Managers - View Flights</h1>
 		</header>
 		<section class="content maincontainer">
 			<div class="leftnav">
 				<nav>
 					<ul>
-						<li><a href="bookYourTravel">Book your travel</a></li>
-						<li><a href="myAccount">My account</a></li>
-						<li><a href="myBookings">My bookings</a></li>
+						<li><a href="viewCustomers">View Customers Info</a></li>
+						<li><a href="viewFlightList">View Flights</a></li>
+						<li><a href="getReport">Report</a></li>
 					</ul>
 				</nav>
 			</div>
 			<div class="row rightNav">
-			
+			<div class = "viewFlightsTable">
 				<label> Flights to Destination</label><br>
 				<table style="width:100%">
 				  <tr>
@@ -176,7 +176,7 @@ select {padding:0.5%; margin-right: 5%;}
 				<div class="bookbtn">
 					<button id="bookTktsBtn" class="fullwidthbtn btn">Book</button>
 				</div>
-							
+				</div>			
 			</div>
 		</section>
 	</section>
