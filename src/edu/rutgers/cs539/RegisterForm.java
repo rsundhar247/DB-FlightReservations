@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -82,6 +83,8 @@ public class RegisterForm extends HttpServlet {
 					System.out.println("User Created");
 					json = new Gson().toJson("User Created.");
 					
+					HttpSession session = request.getSession();
+					session.setAttribute("EmailId", custemail.toLowerCase());
 				} else {
 					System.out.println("Error Occured. Try again later.");
 					json = new Gson().toJson("Error Occured. Try again later.");

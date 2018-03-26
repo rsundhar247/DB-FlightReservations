@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -72,7 +73,8 @@ public class LogonForm extends HttpServlet {
 						json = new Gson().toJson("Customer Login Successful");
 					} 
 					
-
+					HttpSession session = request.getSession();
+					session.setAttribute("EmailId", email.toLowerCase());
 				} 
 			} else {
 				System.out.println("Login Not Successful");

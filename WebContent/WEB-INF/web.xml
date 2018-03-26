@@ -51,6 +51,15 @@
     	<url-pattern>/FlightsReservation</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+    	<servlet-name>EditCustomerServlet</servlet-name>
+    	<servlet-class>edu.rutgers.cs539.EditCustomer</servlet-class>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>EditCustomerServlet</servlet-name>
+    	<url-pattern>/manager/EditCustomer</url-pattern>
+	</servlet-mapping>
+	
 		
 	
 	
@@ -101,7 +110,7 @@
 	
 	<servlet>
     	<servlet-name>ViewCustomersJSP</servlet-name>
-    	<jsp-file>/viewCustomers.jsp</jsp-file>
+    	<jsp-file>/Manager/viewCustomers.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>ViewCustomersJSP</servlet-name>
@@ -110,7 +119,7 @@
 	
 	<servlet>
     	<servlet-name>EditCustomerJSP</servlet-name>
-    	<jsp-file>/editCustomer.jsp</jsp-file>
+    	<jsp-file>/Manager/editCustomer.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>EditCustomerJSP</servlet-name>
@@ -119,7 +128,7 @@
 	
 	<servlet>
     	<servlet-name>ViewFlightListJSP</servlet-name>
-    	<jsp-file>/viewFlightList.jsp</jsp-file>
+    	<jsp-file>/Manager/viewFlightList.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>ViewFlightListJSP</servlet-name>
@@ -128,10 +137,19 @@
 	
 	<servlet>
     	<servlet-name>GetReportJSP</servlet-name>
-    	<jsp-file>/getReport.jsp</jsp-file>
+    	<jsp-file>/Manager/getReport.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>GetReportJSP</servlet-name>
     	<url-pattern>/manager/getReport</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>AddCustomerJSP</servlet-name>
+    	<jsp-file>/Manager/addCustomer.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>AddCustomerJSP</servlet-name>
+    	<url-pattern>/manager/addCustomer</url-pattern>
 	</servlet-mapping>
 </web-app> 

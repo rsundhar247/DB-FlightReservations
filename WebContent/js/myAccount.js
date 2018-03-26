@@ -62,6 +62,9 @@ $(document).ready(function(){
 	        	
 	        	if(data == "Updated Successfully"){
         			document.getElementById("emailError").innerHTML = "Updated Successfully";
+        			window.location = "http://localhost:8080/FlightReservation/myAccount";
+        		} else if(data == "New Email Exists") {
+        			document.getElementById("emailError").innerHTML = "New Email Already Exists";
         		} else if(data == "Email and Password don't match") {
         			document.getElementById("emailError").innerHTML = "Email and Password don't match";
         		} else{
@@ -115,7 +118,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 	        type: "POST",
-	        url: "MyAccountServlet",
+	        url: "MyAccountDetails",
 	        data: { 
 	        	option: 2,
 	        	emailId: emailId,
@@ -141,7 +144,7 @@ $(document).ready(function(){
 		var city = $(".changeAddressform #city").val();
 		var country = $(".changeAddressform #country").val();
 		var zipCode = $(".changeAddressform #zipCode").val();
-		var emailId = "raj@sundhar.com";
+		var emailId = $("#sessionEmail").val();
 		
 		if(!fName){
 			$('.changeAddressform #addressError').text("First Name is mandatory");
@@ -187,7 +190,7 @@ $(document).ready(function(){
 		
 		$.ajax({
 	        type: "POST",
-	        url: "MyAccountServlet",
+	        url: "MyAccountDetails",
 	        data: { 
 	        	option: 3,
 	        	fName: fName,
@@ -200,11 +203,69 @@ $(document).ready(function(){
 	        },
 	        success: function(data){
 	        	if(data == "Updated Successfully"){
-        			document.getElementById("emailError").innerHTML = "Updated Successfully";
+        			document.getElementById("addressError").innerHTML = "Updated Successfully";
         		} else{
-        			document.getElementById("emailError").innerHTML = "Failed. Try again later.";
+        			document.getElementById("addressError").innerHTML = "Failed. Try again later.";
         		}
 	        }
 		});
 	});
+	
+	
+	$('.changeCCform #changeCCBtn').on("click", function(){
+		var ccNickName = $(".changeCCform #ccNickName").val();
+		var ccNumber = $(".changeCCform #ccNumber").val();
+		var ccExp = $(".changeCCform #ccExp").val();
+		var ccCVV = $(".changeCCform #ccCVV").val();
+		var emailId = $("#sessionEmail").val();
+		
+		if(!ccNickName){
+			$('.changeCCform #CCError').text("Nick Name is mandatory");
+			return false;
+		} else {
+			$('.changeCCform #CCError').text("");
+		}
+		
+		if(!ccNumber){
+			$('.changeCCform #CCError').text("Credit Card Number is mandatory");
+			return false;
+		} else {
+			$('.changeCCform #CCError').text("");
+		}
+		
+		if(!ccExp){
+			$('.changeCCform #CCError').text("Expiration Date is mandatory");
+			return false;
+		} else {
+			$('.changeCCform #CCError').text("");
+		}
+		
+		if(!ccCVV){
+			$('.changeCCform #CCError').text("CVV is mandatory");
+			return false;
+		} else {
+			$('.changeCCform #CCError').text("");
+		}
+		
+		$.ajax({
+	        type: "POST",
+	        url: "MyAccountDetails",
+	        data: { 
+	        	option: 4,
+	        	ccNickName: ccNickName,
+	        	ccNumber: ccNumber,
+	        	ccExp: ccExp,
+	        	ccCVV: ccCVV,
+	        	emailId: emailId
+	        },
+	        success: function(data){
+	        	if(data == "Updated Successfully"){
+        			document.getElementById("CCError").innerHTML = "Updated Successfully";
+        		} else{
+        			document.getElementById("CCError").innerHTML = "Failed. Try again later.";
+        		}
+	        }
+		});
+	});
+	
 });

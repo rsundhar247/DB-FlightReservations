@@ -52,24 +52,30 @@ public class MyAccountForm extends HttpServlet{
 				Class.forName("com.mysql.jdbc.Driver");
 				Connection con = DriverManager.getConnection(url, "admin", "database");
 				Statement stmt = con.createStatement();
-				
-				String query = "Select Users_Id from Users where lower(EmailAddress) ='" + oldEmailId + "' and Password ='" + userPwd + "'";
-
+				String query = "Select Users_Id from Users where lower(EmailAddress) ='" + newEmailId + "'";
 				ResultSet result = stmt.executeQuery(query);
 				if(result.next()){
-					String Users_Id = result.getString(1);	
-						
-					query = "Update Users set EmailAddress ='" + newEmailId + "' where Users_Id ="+ Users_Id;
-					int res = stmt.executeUpdate(query);
+					System.out.println("New Email Exists");
+					json = new Gson().toJson("New Email Exists");
 					
-					System.out.println("Updated Successfully");
-					json = new Gson().toJson("Updated Successfully");
-
 				} else {
-					System.out.println("Email and Password don't match");
-					json = new Gson().toJson("Email and Password don't match");
-				}			
-				
+					query = "Select Users_Id from Users where lower(EmailAddress) ='" + oldEmailId + "' and Password ='" + userPwd + "'";
+					
+					result = stmt.executeQuery(query);
+					if(result.next()){
+						String Users_Id = result.getString(1);	
+							
+						query = "Update Users set EmailAddress ='" + newEmailId + "' where Users_Id ="+ Users_Id;
+						int res = stmt.executeUpdate(query);
+						
+						System.out.println("Updated Successfully");
+						json = new Gson().toJson("Updated Successfully");
+	
+					} else {
+						System.out.println("Email and Password don't match");
+						json = new Gson().toJson("Email and Password don't match");
+					}			
+				}
 			} catch (SQLException | ClassNotFoundException e) {
 				json = new Gson().toJson("Failed. Try again later.");
 				e.printStackTrace();
@@ -132,10 +138,10 @@ public class MyAccountForm extends HttpServlet{
 				if(result.next()){
 					String Users_Id = result.getString(1);	
 					query = "Update Address set Address ='" + address +"', City ='" + city +"', Country ='" + country + "', Zipcode ='" + zipCode + "' where Users_Id =" + Users_Id;
-					int res = stmt.executeUpdate(query);
+					stmt.executeUpdate(query);
 					
 					query = "Update Users set FirstName ='" + fName +"', LastName ='" + lName +"' where Users_Id =" + Users_Id;
-					res = stmt.executeUpdate(query);
+					stmt.executeUpdate(query);
 					
 					System.out.println("Updated Successfully");
 					json = new Gson().toJson("Updated Successfully");
@@ -145,12 +151,46 @@ public class MyAccountForm extends HttpServlet{
 					if(result.next()){
 						String Users_Id = result.getString(1);
 						query = "Insert into Address(Users_Id, Address, City, Country, Zipcode) values(" + Users_Id + ", '" + address + "', '" + city + "', '" + country + "', '" + zipCode + "')";
-						int res = stmt.executeUpdate(query);
+						stmt.executeUpdate(query);
 						
 						query = "Update Users set FirstName ='" + fName +"', LastName ='" + lName +"' where Users_Id =" + Users_Id;
-						res = stmt.executeUpdate(query);
+						stmt.executeUpdate(query);
 					}
 					
+					System.out.println("Updated Successfully");
+					json = new Gson().toJson("Updated Successfully");
+				}
+			} catch (SQLException | ClassNotFoundException e) {
+				json = new Gson().toJson("Failed. Try again later.");
+				e.printStackTrace();
+			}
+		} else if(option.equals("4")) { // Update Credit Card
+			
+			String ccNickName = request.getParameter("ccNickName");
+			String ccNumber = request.getParameter("ccNumber");
+			String ccExp = request.getParameter("ccExp");
+			String ccCVV = request.getParameter("ccCVV");
+			String emailId = request.getParameter("emailId").toLowerCase();
+			
+			String url = "jdbc:mysql://msdsdbs.ccnr1cm6zd1l.us-east-2.rds.amazonaws.com:3306/project1";
+			String query = "Select Users_Id from CardDetails where Users_Id in (Select Users_Id from Users where lower(EmailAddress) = '" + emailId + "')";
+			
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				Connection con = DriverManager.getConnection(url, "admin", "database");
+				Statement stmt = con.createStatement();
+				ResultSet result = stmt.executeQuery(query);
+				if(result.next()){
+					String Users_Id = result.getString(1);	
+					query = "Update CardDetails set NickName ='" + ccNickName +"', CardNumber =" + ccNumber +", CVV =" + ccCVV + ", ExpirationDate ='" + ccExp + "' where Users_Id =" + Users_Id;
+					System.out.println(query);stmt.executeUpdate(query);
+					
+					System.out.println("Updated Successfully");
+					json = new Gson().toJson("Updated Successfully");
+				} else {
+					query = "Insert into CardDetails(Users_Id, NickName, CardNumber, CVV, ExpirationDate) values((Select Users_Id from Users where lower(EmailAddress) = '" + emailId + "')" +
+									", '" + ccNickName + "', " + ccNumber + ", " + ccCVV + ", '" + ccExp + "')";
+					System.out.println(query);stmt.executeUpdate(query);
 					System.out.println("Updated Successfully");
 					json = new Gson().toJson("Updated Successfully");
 				}
