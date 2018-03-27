@@ -86,6 +86,13 @@ select {padding:0.5%; margin-right: 5%;}
 </style>
 </head>
 <body>
+
+	<%
+		if(session.getAttribute("userType") == null || ! session.getAttribute("userType").equals("manager")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/");
+		}
+	%>
+	
 	<section class="container">
 		<header>
 			<h1>Geek Managers - Edit Customer</h1>
@@ -97,6 +104,7 @@ select {padding:0.5%; margin-right: 5%;}
 						<li><a href="viewCustomers">View Customers Info</a></li>
 						<li><a href="viewFlightList">View Flights</a></li>
 						<li><a href="getReport">Report</a></li>
+						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>

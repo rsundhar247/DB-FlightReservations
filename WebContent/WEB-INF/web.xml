@@ -152,4 +152,32 @@
     	<servlet-name>AddCustomerJSP</servlet-name>
     	<url-pattern>/manager/addCustomer</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>FilterFlightsJSP</servlet-name>
+    	<jsp-file>/Manager/filterFlights.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>FilterFlightsJSP</servlet-name>
+    	<url-pattern>/manager/filterFlights</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>FilterReservationsJSP</servlet-name>
+    	<jsp-file>/Manager/filterReservations.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>FilterReservationsJSP</servlet-name>
+    	<url-pattern>/manager/filterReservations</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>FilterCustomersJSP</servlet-name>
+    	<jsp-file>/Manager/filterCustomers.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>FilterCustomersJSP</servlet-name>
+    	<url-pattern>/manager/filterCustomers</url-pattern>
+	</servlet-mapping>
+	
 </web-app> 

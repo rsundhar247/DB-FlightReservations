@@ -75,6 +75,7 @@ public class LogonForm extends HttpServlet {
 					
 					HttpSession session = request.getSession();
 					session.setAttribute("EmailId", email.toLowerCase());
+					session.setAttribute("userType", userType.toLowerCase());
 				} 
 			} else {
 				System.out.println("Login Not Successful");

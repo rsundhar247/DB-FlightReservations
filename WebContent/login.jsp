@@ -14,6 +14,18 @@ html {
 <body>
 
 	<section class="container">
+	
+		<%
+			if(session.getAttribute("EmailId") != null){
+			    session.removeAttribute("EmailId");
+			}
+			
+			if(session.getAttribute("userType") != null){
+			    session.removeAttribute("userType");
+			}
+		%>
+		
+
 		<header>
 			<h1>Geek Users Sign-In or Register</h1>
 		</header>

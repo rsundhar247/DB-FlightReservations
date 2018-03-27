@@ -81,6 +81,7 @@ nav ul li a:hover{
 						<li><a href="bookYourTravel">Book your travel</a></li>
 						<li><a href="myAccount">My account</a></li>
 						<li><a href="myBookings">My bookings</a></li>
+						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>

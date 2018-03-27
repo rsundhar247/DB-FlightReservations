@@ -94,6 +94,7 @@ select {padding:0.5%; margin-right: 5%;}
 						<li><a href="bookYourTravel">Book your travel</a></li>
 						<li><a href="myAccount">My account</a></li>
 						<li><a href="myBookings">My bookings</a></li>
+						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>

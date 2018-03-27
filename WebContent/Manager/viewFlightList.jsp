@@ -69,6 +69,13 @@ nav ul li a:hover{
 
 </head>
 <body>
+
+	<%
+		if(session.getAttribute("userType") == null || ! session.getAttribute("userType").equals("manager")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/");
+		}
+	%>
+	
 	<section class="container">
 	<header>
 		<h1>Geek Managers - View Flights List</h1>
@@ -80,60 +87,59 @@ nav ul li a:hover{
 						<li><a href="viewCustomers">View Customers Info</a></li>
 						<li><a href="viewFlightList">View Flights</a></li>
 						<li><a href="getReport">Report</a></li>
+						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>
 			<div class="row rightNav">
 				<div class = "viewFlightListTable">
-					<table style="width:100%">
-					  <tr>
-					  	<th>Airline Id</th>
-					    <th>Airline Name</th>
-					    <th>Flight Id</th> 
-					    <th>Departure City</th>
-					    <th>Departure Airport</th>
-					    <th>Departure Time</th>
-					    <th>Arrival City</th>
-					    <th>Arrival Airport</th>
-					    <th>Arrival Time</th>
-					    <th>Seat Capacity</th>
-					    <th>Economy Capacity</th>
-					    <th>First Class Capacity</th>
-					  </tr>
-					  <tr>
-					    <td>AA123</td>
-					    <td>American Airlines</td> 
-					    <td>A456</td>
-					    <td>New Jersey</td>
-					    <td>Newark</td>
-					    <td>13:00</td>
-					    <td>Berkley</td>
-					    <td>AAA</td>
-						<td>19:00</td>
-						<td>153</td>
-						<td>130</td>
-						<td>23</td>
-					  </tr>
-					   <tr>
-					    <td>BA123</td>
-					    <td>British Airlines</td> 
-					    <td>Q123</td>
-					    <td>New York</td>
-					    <td>LaGuardia</td>
-					    <td>03:00</td>
-					    <td>Dallas</td>
-					    <td>FortWorth</td>
-						<td>07:00</td>
-						<td>546</td>
-						<td>356</td>
-						<td>190</td>
-					  </tr>
-					</table>				
+					
+					<li><a href="filterFlights?flights=all">List All Flights</a></li> <br>
+					<li><a href="filterFlights?flights=active">Most Active Flights</a></li> <br>	
+					
+					<div class="flightNoform">
+						<div class="row">
+							<label id="flightNoError" class="error">&nbsp;</label>
+							<label for="airlineNo"> Reservations by Airline Id : </label>
+							<input type="text" name="airlineNo" id="airlineNo" placeholder="Airline Id (AA/BA/..)" />
+							<label for="flightNo"> and Flight Id : </label>
+							<input type="text" name="flightNo" id="flightNo" placeholder="Flight Number (1/2/..)" />
+							<button id="filterFlightOnNos" class="fullwidthbtn btn right">Filter</button> <br><br>
+						</div>
+						
+						<div class="row">
+							<label id="flightCustError" class="error">&nbsp;</label>
+							<label for="custName">Reservations  by Customer Full Name : </label>
+							<input type="text" name="custName" id="custName" placeholder="Customer Full Name" />
+							<button id="filterFlightOnCustName" class="fullwidthbtn btn right">Filter</button> <br><br>
+						</div>
+						
+						<div class="row">
+							<label id="flightAirportError" class="error">&nbsp;</label>
+							<label for="airportName">View Flights by Airport Code : </label>
+							<input type="text" name="airportName" id="airportName" placeholder="Airport Name (JFK/DFW/..)" />
+							<button id="filterFlightOnAirportName" class="fullwidthbtn btn right">Filter</button> <br><br>
+						</div>
+						
+						<li><a href="filterCustomers?filter=revenue">Customers with Most Revenue</a></li> <br>
+						<div class="row">
+							<label id="filterCustomersError" class="error">&nbsp;</label>
+							<label for="airNo"> Customers who Booked seats in Airline Id : </label>
+							<input type="text" name="airNo" id="airNo" placeholder="Airline Id (AA/BA/..)" />
+							<label for="fltNo"> and Flight Id : </label>
+							<input type="text" name="fltNo" id="fltNo" placeholder="Flight Number (1/2/..)" />
+							<button id="filterCustomersOnAirportName" class="fullwidthbtn btn right">Filter</button> <br><br>
+						</div>
+
+					</div>
 				
 				</div>				
 			</div>
 		</section>
 	</section>
+	
+	
+	<script src="/FlightReservation/js/viewFlightList.js"></script>
 	
 </body>
 </html>

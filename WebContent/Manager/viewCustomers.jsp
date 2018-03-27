@@ -72,6 +72,13 @@ nav ul li a:hover{
 
 </head>
 <body>
+
+	<%
+		if(session.getAttribute("userType") == null || ! session.getAttribute("userType").equals("manager")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/");
+		}
+	%>
+
 	<section class="container">
 	<header>
 		<h1>Geek Managers - View Customers Info</h1>
@@ -83,6 +90,7 @@ nav ul li a:hover{
 						<li><a href="viewCustomers">View Customers Info</a></li>
 						<li><a href="viewFlightList">View Flights</a></li>
 						<li><a href="getReport">Report</a></li>
+						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>
