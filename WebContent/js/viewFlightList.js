@@ -65,4 +65,18 @@ $(document).ready(function(){
 		
         window.location = "http://localhost:8080/FlightReservation/manager/filterCustomers?filter=flight&airNo="+airNo+"&fltNo="+fltNo;
 	});
+	
+	$('#filterCustomersOnMonth').on("click", function(){
+		var month = $("#month").val();
+		var year = $("#year").val();
+		
+		if(!year){
+			$('#filterMonthError').text("Year is mandatory");
+			return false;
+		} else {
+			$('#filterMonthError').text("");
+		}
+		
+        window.location = "http://localhost:8080/FlightReservation/manager/filterMonth?month="+month+"&year="+year;
+	});
 });

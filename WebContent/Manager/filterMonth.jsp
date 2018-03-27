@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Geek Reservations - View Customers Info</title>
+<title>Geek Reservations - View Orders on Month</title>
 <script src="/FlightReservation/js/library/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" href="/FlightReservation/css/reset.css" />
 
@@ -79,9 +79,10 @@ nav ul li a:hover{
 		}
 	%>
 	
+	
 	<section class="container">
 	<header>
-		<h1>Geek Managers - View Customers Info</h1>
+		<h1>Geek Managers - View Orders on Month</h1>
 	</header>
 		<section class="content maincontainer">
 			<div class="leftnav">
@@ -96,66 +97,59 @@ nav ul li a:hover{
 			<div class="row rightNav">
 				<div class = "viewFlightsTable">
 					<table style="width:100%">
-						 
+						 <tr>
+						    <th>Customer Name</th> 
+						    <th>Email Address</th>
+						    <th>Booking Id</th>
+						    <th>Departure City</th>
+						    <th>Arrival City</th>
+						    <th>TotalFee</th>
+						    <th>Booking TimeStamp</th>
+						  </tr>
 							<%
 									
 								String url = "jdbc:mysql://msdsdbs.ccnr1cm6zd1l.us-east-2.rds.amazonaws.com:3306/project1";
 								try {
-									String param = request.getParameter("filter");
+									String month = request.getParameter("month");
+									String year = request.getParameter("year");
 									Class.forName("com.mysql.jdbc.Driver");
 									Connection con = DriverManager.getConnection(url, "admin", "database");
 									Statement stmt = con.createStatement();
-									String query = "";
-									if(param.equals("revenue")){
-										query = "Select u.FirstName, u.LastName, u.EmailAddress, t.Revenue from Users u, " +
-												"(SELECT Users_Id, SUM(TotalFee) AS Revenue FROM Reservations GROUP BY Users_Id) t " +
-												"where u.Users_id = t.Users_id order by t.Revenue desc";
-										%>
-											<tr>
-											    <th>First Name</th> 
-											    <th>Last Name</th>
-											    <th>Email Address</th>
-											    <th>Revenue</th>
-											  </tr>
-										<%
-									} else if(param.equals("flight")){
-										String airNo = request.getParameter("airNo");
-										String fltNo = request.getParameter("fltNo");
-										
-										query = "Select U.FirstName, U.LastName, U.EmailAddress, concat(RD.Airline_Id, '-', RD.Flight_Id) as AirlineNo from " +
-												"Users U, ReservationDetails RD, Reservations R " +
-												"where U.Users_id = R.Users_id and R.Users_Id = U.Users_Id and RD.Flight_Id =" + fltNo + " and RD.Airline_Id = '" + airNo + "'";
-										
-										%>
-										<tr>
-										    <th>First Name</th> 
-										    <th>Last Name</th>
-										    <th>Email Address</th>
-										    <th>Airline Number</th>
-										  </tr>
-									<%
-									}
+									String query = "SELECT concat(U.FirstName,' ', U.LastName) as Name, U.EmailAddress, RD.BookingId, " +
+											"RD.DepartureCity, RD.ArrivalCity, Res.TotalFee, Res.BookingTimeStamp " +
+											"FROM Reservations Res, ReservationDetails RD, Users U " +
+											"WHERE Res.Reservation_Id = RD.Reservation_Id and Res.Users_Id = U.Users_Id and " +
+											"DATE(Res.BookingTimeStamp) BETWEEN '" + year + "-" + month + "-01' AND '" + year + "-" + month + "-31'";
 									
 									ResultSet result = stmt.executeQuery(query);
 									
-									String fName = "", lName = "", emailId = "", revAirNo = "";
+									String name = "", emailId = "", bookId = "", depCity = "", arrCity = "", totalFee = "", bookTime = "";
 									while(result.next()){
-										fName = result.getString(1);
-										lName = result.getString(2);
-										emailId = result.getString(3);
-										revAirNo = result.getString(4);
+										name = result.getString(1);
+										emailId = result.getString(2);
+										bookId = result.getString(3);
+										depCity = result.getString(4);
+										arrCity = result.getString(5);
+										totalFee = result.getString(6);
+										bookTime = result.getString(7); 
 										
-										pageContext.setAttribute("fName", fName);
-										pageContext.setAttribute("lName", lName);
+										pageContext.setAttribute("name", name);
 										pageContext.setAttribute("emailId", emailId);
-										pageContext.setAttribute("revAirNo", revAirNo);
+										pageContext.setAttribute("bookId", bookId);
+										pageContext.setAttribute("depCity", depCity);
+										pageContext.setAttribute("arrCity", arrCity);
+										pageContext.setAttribute("totalFee", totalFee);
+										pageContext.setAttribute("bookTime", bookTime);
 										
 							%>	
 								<tr class="row">
-								    <td> <%= pageContext.getAttribute("fName") %> </td> 
-								    <td> <%= pageContext.getAttribute("lName") %> </td>
+								    <td> <%= pageContext.getAttribute("name") %> </td> 
 								    <td> <%= pageContext.getAttribute("emailId") %> </td>
-								    <td> <%= pageContext.getAttribute("revAirNo") %> </td>
+								    <td> <%= pageContext.getAttribute("bookId") %> </td>
+								    <td> <%= pageContext.getAttribute("depCity") %> </td>
+								    <td> <%= pageContext.getAttribute("arrCity") %> </td>
+								    <td> <%= pageContext.getAttribute("totalFee") %> </td>
+								    <td> <%= pageContext.getAttribute("bookTime") %> </td>
 							  	</tr>
 							<%
 									}

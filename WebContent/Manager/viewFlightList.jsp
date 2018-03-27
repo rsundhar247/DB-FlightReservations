@@ -85,8 +85,7 @@ nav ul li a:hover{
 				<nav>
 					<ul>
 						<li><a href="viewCustomers">View Customers Info</a></li>
-						<li><a href="viewFlightList">View Flights</a></li>
-						<li><a href="getReport">Report</a></li>
+						<li><a href="viewFlightList">View Flights/Report</a></li>
 						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
@@ -122,6 +121,7 @@ nav ul li a:hover{
 						</div>
 						
 						<li><a href="filterCustomers?filter=revenue">Customers with Most Revenue</a></li> <br>
+						
 						<div class="row">
 							<label id="filterCustomersError" class="error">&nbsp;</label>
 							<label for="airNo"> Customers who Booked seats in Airline Id : </label>
@@ -130,7 +130,31 @@ nav ul li a:hover{
 							<input type="text" name="fltNo" id="fltNo" placeholder="Flight Number (1/2/..)" />
 							<button id="filterCustomersOnAirportName" class="fullwidthbtn btn right">Filter</button> <br><br>
 						</div>
-
+						
+						<li><a href="SummaryListing">Revenue generated - Grouped by Flight / Destination City / Customer</a></li> <br>
+						
+						<div class="row">
+							<label id="filterMonthError" class="error">&nbsp;</label>
+							<label for="month"> Sales Report for Month : </label>
+							<select name="month" id="month"">
+								<option value="1">Jan</option>
+								<option value="2">Feb</option>
+								<option value="3">Mar</option>
+								<option value="4">Apr</option>
+								<option value="5">May</option>
+								<option value="6">Jun</option>
+								<option value="7">Jul</option>
+								<option value="8">Aug</option>
+								<option value="9">Sep</option>
+								<option value="10">Oct</option>
+								<option value="11">Nov</option>
+								<option value="12">Dec</option>
+							</select>
+							<label for="year"> and Year : </label>
+							<input type="text" name="year" id="year" placeholder="Year (2018/..)" />
+							<button id="filterCustomersOnMonth" class="fullwidthbtn btn right">Filter</button> <br><br>
+						</div>
+						
 					</div>
 				
 				</div>				

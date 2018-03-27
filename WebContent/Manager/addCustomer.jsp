@@ -100,8 +100,7 @@ select {padding:0.5%; margin-right: 5%;}
 				<nav>
 					<ul>
 						<li><a href="viewCustomers">View Customers Info</a></li>
-						<li><a href="viewFlightList">View Flights</a></li>
-						<li><a href="getReport">Report</a></li>
+						<li><a href="viewFlightList">View Flights/Report</a></li>
 						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>

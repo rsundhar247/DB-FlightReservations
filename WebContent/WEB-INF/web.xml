@@ -180,4 +180,22 @@
     	<url-pattern>/manager/filterCustomers</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+    	<servlet-name>FilterMonthJSP</servlet-name>
+    	<jsp-file>/Manager/filterMonth.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>FilterMonthJSP</servlet-name>
+    	<url-pattern>/manager/filterMonth</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    	<servlet-name>SummaryListingJSP</servlet-name>
+    	<jsp-file>/Manager/SummaryListing.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>SummaryListingJSP</servlet-name>
+    	<url-pattern>/manager/SummaryListing</url-pattern>
+	</servlet-mapping>
+	
 </web-app> 

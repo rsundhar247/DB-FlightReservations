@@ -90,8 +90,7 @@ nav ul li a:hover{
 				<nav>
 					<ul>
 						<li><a href="viewCustomers">View Customers Info</a></li>
-						<li><a href="viewFlightList">View Flights</a></li>
-						<li><a href="getReport">Report</a></li>
+						<li><a href="viewFlightList">View Flights/Report</a></li>
 						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
