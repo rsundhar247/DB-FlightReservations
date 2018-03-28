@@ -7,7 +7,6 @@ $(document).ready(function(){
 		var returnDate = $(".bookTktsform #returnDate").val();
 		var prefClass = $(".bookTktsform #prefClass").val();
 		var adultTkts = $(".bookTktsform #adultTkts").val();
-		var childTkts = $(".bookTktsform #childTkts").val();
 		
 		if(document.getElementById('travelWay1').checked) {
 			var travelWay = "One Way";
@@ -57,22 +56,8 @@ $(document).ready(function(){
 			$('.bookTktsform #bookTktsError').text("");
 		}
 		
-		$.ajax({
-	        type: "POST",
-	        url: "BookTravel",
-	        data: { 
-	        	originCity: originCity,
-	        	destinationCity: destinationCity,
-	        	depDate: depDate,
-	        	returnDate: returnDate,
-	        	prefClass: prefClass,
-	        	adultTkts: adultTkts,
-	        	childTkts: childTkts,
-	        	travelWay: travelWay
-	        },
-	        success: function(data){
-	        	window.location = "http://localhost:8080/FlightReservation/viewFlights";
-	        }
-		});
+		window.location = "http://localhost:8080/FlightReservation/customer/viewFlights?oCity="+originCity+"&dCity="+destinationCity+"&dDate="+depDate+
+	        						"&rDate="+returnDate+"&pClass="+prefClass+"&aTkts="+adultTkts+"&travelWay="+travelWay;
+	       
 	});
 });

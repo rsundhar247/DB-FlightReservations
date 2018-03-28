@@ -62,7 +62,7 @@ $(document).ready(function(){
 	        	
 	        	if(data == "Updated Successfully"){
         			document.getElementById("emailError").innerHTML = "Updated Successfully";
-        			window.location = "http://localhost:8080/FlightReservation/myAccount";
+        			window.location = "http://localhost:8080/FlightReservation/customer/myAccount";
         		} else if(data == "New Email Exists") {
         			document.getElementById("emailError").innerHTML = "New Email Already Exists";
         		} else if(data == "Email and Password don't match") {

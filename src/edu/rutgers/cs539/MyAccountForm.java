@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
@@ -65,11 +66,14 @@ public class MyAccountForm extends HttpServlet{
 					if(result.next()){
 						String Users_Id = result.getString(1);	
 							
-						query = "Update Users set EmailAddress ='" + newEmailId + "' where Users_Id ="+ Users_Id;
+						query = "Update Users set EmailAddress ='" + newEmailId + "', LastUpdate = NOW() where Users_Id ="+ Users_Id;
 						int res = stmt.executeUpdate(query);
 						
 						System.out.println("Updated Successfully");
 						json = new Gson().toJson("Updated Successfully");
+						
+						HttpSession session = request.getSession();
+						session.setAttribute("EmailId", newEmailId.toLowerCase());
 	
 					} else {
 						System.out.println("Email and Password don't match");
@@ -100,7 +104,7 @@ public class MyAccountForm extends HttpServlet{
 				if(result.next()){
 					String Users_Id = result.getString(1);	
 						
-					query = "Update Users set Password ='" + newUserPwd + "' where Users_Id ="+ Users_Id;
+					query = "Update Users set Password ='" + newUserPwd + "', LastUpdate = NOW()  where Users_Id ="+ Users_Id;
 					int res = stmt.executeUpdate(query);
 					
 					System.out.println("Updated Successfully");
@@ -140,7 +144,7 @@ public class MyAccountForm extends HttpServlet{
 					query = "Update Address set Address ='" + address +"', City ='" + city +"', Country ='" + country + "', Zipcode ='" + zipCode + "' where Users_Id =" + Users_Id;
 					stmt.executeUpdate(query);
 					
-					query = "Update Users set FirstName ='" + fName +"', LastName ='" + lName +"' where Users_Id =" + Users_Id;
+					query = "Update Users set FirstName ='" + fName +"', LastName ='" + lName +"', LastUpdate = NOW() where Users_Id =" + Users_Id;
 					stmt.executeUpdate(query);
 					
 					System.out.println("Updated Successfully");
@@ -153,7 +157,7 @@ public class MyAccountForm extends HttpServlet{
 						query = "Insert into Address(Users_Id, Address, City, Country, Zipcode) values(" + Users_Id + ", '" + address + "', '" + city + "', '" + country + "', '" + zipCode + "')";
 						stmt.executeUpdate(query);
 						
-						query = "Update Users set FirstName ='" + fName +"', LastName ='" + lName +"' where Users_Id =" + Users_Id;
+						query = "Update Users set FirstName ='" + fName +"', LastName ='" + lName +"', LastUpdate = NOW() where Users_Id =" + Users_Id;
 						stmt.executeUpdate(query);
 					}
 					

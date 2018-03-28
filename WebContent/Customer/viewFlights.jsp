@@ -1,10 +1,13 @@
 <!DOCTYPE html>
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<%@ page import="java.text.*, java.util.Date, java.util.Enumeration" %> 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Geek Reservations - View Flights</title>
-<script src="js/library/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" href="css/reset.css" />
+<script src="/FlightReservation/js/library/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="/FlightReservation/css/reset.css" />
 <style>
 html {
 	background: linear-gradient(#11bab4 ,#fff) no-repeat;
@@ -83,6 +86,16 @@ select {padding:0.5%; margin-right: 5%;}
 </style>
 </head>
 <body>
+
+	<%
+		if(session.getAttribute("userType") != null && session.getAttribute("userType").equals("manager")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/manager/viewCustomers");
+		}	
+		if(session.getAttribute("userType") == null || ! session.getAttribute("userType").equals("customer")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/");
+		}
+	%>
+	
 	<section class="container">
 		<header>
 			<h1>Geek Managers - View Flights</h1>
@@ -91,88 +104,339 @@ select {padding:0.5%; margin-right: 5%;}
 			<div class="leftnav">
 				<nav>
 					<ul>
-						<li><a href="bookYourTravel">Book your travel</a></li>
-						<li><a href="myAccount">My account</a></li>
-						<li><a href="myBookings">My bookings</a></li>
+						<li><a href="/FlightReservation/customer/bookYourTravel">Book your travel</a></li>
+						<li><a href="/FlightReservation/customer/myAccount">My account</a></li>
+						<li><a href="/FlightReservation/customer/myBookings">My bookings</a></li>
 						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>
 			<div class="row rightNav">
 			<div class = "viewFlightsTable">
-				<label> Flights to Destination</label><br>
-				<table style="width:100%">
-				  <tr>
-				    <th>Airline Name</th> 
-				    <th>Airline Code</th>
-				    <th>Departure City</th>
-				    <th>Arrival City</th>
-				    <th>Departure Time</th>
-				    <th>Arrival Time</th>
-				    <th>Travel Time</th>
-				    <th>Select</th>
-				  </tr>
-				  <tr>
-				    <td>American Airlines</td> 
-				    <td>AA123</td>
-				    <td>New York</td>
-				    <td>London</td>
-				    <td>21:45</td>
-				    <td>06:45</td>
-				    <td>09:00</td>
-					<td><input type="radio" name="travelBook1" checked id="travelBook11" value="1"></td>
-				  </tr>
-				  <tr>
-				    <td>British Airlines</td> 
-				    <td>BA143</td>
-				    <td>London</td>
-				    <td>Chicago</td>
-				    <td>08:45</td>
-				    <td>15:45</td>
-				    <td>07:00</td>
-					<td><input type="radio" name="travelBook1" id="travelBook12" value="2"></td>
-				  </tr>
-				</table>	
+				<input type="hidden" name="sessionEmail" id="sessionEmail" value=<%= session.getAttribute("EmailId") %>>
+				<input type="hidden" name="aTkts" id="aTkts" value=<%= request.getParameter("aTkts") %>>
+				<input type="hidden" name="pClass" id="pClass" value=<%= request.getParameter("pClass") %>>
+				<input type="hidden" name="dDate" id="dDate" value=<%= request.getParameter("dDate") %>>
+				
+				<h2> Flights to Destination</h2><br>
+					<table style="width:100%">
+					  <tr>
+					    <th>Select</th>
+					    <th>Airline Name</th> 
+					    <th>Airline Code</th>
+					    <th>Departure Airport</th>
+					    <th>Arrival Airport</th>
+					    <th>Departure Time</th>
+					    <th>Travel Time</th>
+					    <th>Fare</th>
+					  </tr>
+				
+						<%
+									
+								String url = "jdbc:mysql://msdsdbs.ccnr1cm6zd1l.us-east-2.rds.amazonaws.com:3306/project1";
+								try {
+									Class.forName("com.mysql.jdbc.Driver");
+									Connection con = DriverManager.getConnection(url, "admin", "database");
+									Statement stmt = con.createStatement();
+									String query = "";
+									
+									query = "SELECT AR.AirlineName, concat(FL.Airline_Id, '-', FL.Flight_Id) as FlightNumber, FL.DepartureAirport, FL.ArrivalAirport, " +
+											"FL.DepartureTime, FL.TravelTime, FA.AirlineFare FROM Airlines AR, Flights FL, Fare FA  " +
+											"WHERE AR.airline_ID = FL.Airline_Id and FL.Airline_Id = FA.Airline_Id and FL.Flight_Id = FA.Flight_Id AND " +
+											"(lower(FL.DepartureAirport) = '"+ request.getParameter("oCity").toLowerCase() +
+											"' AND lower(FL.ArrivalAirport) = '"+ request.getParameter("dCity").toLowerCase() +
+											"' AND lower(FA.WorkingDay) = lower(DAYNAME('" + request.getParameter("dDate") +"')))";
+										
+									ResultSet result = stmt.executeQuery(query);
+									
+									String airName = "", fNumber = "", depAirport = "", arrAirport = "", depTime = "", travelTime = "", airFare = "";
+									int count = 1;
+									
+									while(result.next()){
+											airName = result.getString(1);
+											fNumber = result.getString(2);
+											depAirport = result.getString(3);
+											arrAirport = result.getString(4);
+											depTime = result.getString(5);
+											travelTime = result.getString(6);
+											airFare = result.getString(7); 
+											
+											pageContext.setAttribute("airName", airName);
+											pageContext.setAttribute("fNumber", fNumber);
+											pageContext.setAttribute("depAirport", depAirport);
+											pageContext.setAttribute("arrAirport", arrAirport);
+											pageContext.setAttribute("depTime", depTime);
+											pageContext.setAttribute("travelTime", travelTime);
+											pageContext.setAttribute("airFare", airFare);
+											pageContext.setAttribute("count", count);
+										
+							%>	
+				
+				
+							  <tr class="row<%= pageContext.getAttribute("count") %>">
+							  	<%if(count == 1){ %>
+							   	 	<td><input type="radio" name="travelBook1" checked value=<%= pageContext.getAttribute("count") %>></td>
+							    <%} else { %>
+							     	<td><input type="radio" name="travelBook1" value=<%= pageContext.getAttribute("count") %>></td>
+							    <%} %>
+							    <td class="airName<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("airName") %></td> 
+							    <td class="fNumber<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("fNumber") %></td>
+							    <td class="depAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("depAirport") %></td>
+							    <td class="arrAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("arrAirport") %></td>
+							    <td class="depTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("depTime") %></td>
+							    <td class="travelTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("travelTime") %></td>
+							    <td class="airFare<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("airFare") %></td>
+							  </tr>
+				  
+						  <%
+						  				++count;
+									} 
+									
+									query = "Select T1.AirlineName as L1_AirlineName, T1.AirlineCode as L1_AirlineCode, T1.DepartureAirport as L1_DepartureAirport, " +
+											"T1.ArrivalAirport as L1_ArrivalAirport, T1.AirlineFare as L1_AirlineFare, " +
+											"T1.DepartureTime as L1_DepartureTime, T1.TravelTIme as L1_TravelTime, " +
+											"T2.AirlineName as L2_AirlineName, T2.AirlineCode as L2_AirlineCode, T2.DepartureAirport as L2_DepartureAirport, " + 
+											"T2.ArrivalAirport as L2_ArrivalAirport, T2.AirlineFare as L2_AirlineFare, " +
+											"T2.DepartureTime as L2_DepartureTime, T2.TravelTIme as L2_TravelTime from " +
+											"(SELECT AR.AirlineName, concat(FL.Airline_Id, '-', FL.Flight_Id) as AirlineCode, FL.DepartureAirport, " + 
+											"FL.ArrivalAirport, FA.WorkingDay, FA.AirlineFare, FL.DepartureTime, FL.TravelTime " +
+											"FROM Flights FL, Fare FA, Airlines AR " +
+											"WHERE FL.Airline_Id = FA.Airline_Id AND AR.Airline_Id = FL.Airline_Id AND " +
+											"FL.Flight_Id = FA.Flight_Id AND lower(FL.DepartureAirport) = '" + request.getParameter("oCity").toLowerCase() + 
+											"' ) T1, (SELECT AR.AirlineName, concat(FL.Airline_Id, '-', FL.Flight_Id) as AirlineCode, FL.DepartureAirport,  " +
+											"FL.ArrivalAirport, FA.WorkingDay, FA.AirlineFare, FL.DepartureTime, FL.TravelTime " +
+											"FROM Flights FL, Fare FA, Airlines AR WHERE FL.Airline_Id = FA.Airline_Id AND AR.Airline_Id = FL.Airline_Id AND " +
+											"FL.Flight_Id = FA.Flight_Id AND lower(FL.ArrivalAirport) = '" + request.getParameter("dCity").toLowerCase() + 
+											"') T2 where T1.ArrivalAirport = T2.DepartureAirport";
+									
+									result = stmt.executeQuery(query);
+									
+									String L1airName = "", L1fNumber = "", L1depAirport = "", L1arrAirport = "", L1airFare = "", L1depTime = "", L1travelTime = "";
+									String L2airName = "", L2fNumber = "", L2depAirport = "", L2arrAirport = "", L2airFare = "", L2depTime = "", L2travelTime = "";
+									
+									while(result.next()){
+											L1airName = result.getString(1);
+											L1fNumber = result.getString(2);
+											L1depAirport = result.getString(3);
+											L1arrAirport = result.getString(4);
+											L1airFare = result.getString(5);
+											L1depTime = result.getString(6);
+											L1travelTime = result.getString(7); 
+											
+											L2airName = result.getString(8);
+											L2fNumber = result.getString(9);
+											L2depAirport = result.getString(10);
+											L2arrAirport = result.getString(11);
+											L2airFare = result.getString(12);
+											L2depTime = result.getString(13);
+											L2travelTime = result.getString(14);
+											
+											pageContext.setAttribute("L1airName", L1airName);
+											pageContext.setAttribute("L1fNumber", L1fNumber);
+											pageContext.setAttribute("L1depAirport", L1depAirport);
+											pageContext.setAttribute("L1arrAirport", L1arrAirport);
+											pageContext.setAttribute("L1airFare", L1airFare);
+											pageContext.setAttribute("L1depTime", L1depTime);
+											pageContext.setAttribute("L1travelTime", L1travelTime);
+											
+											pageContext.setAttribute("L2airName", L2airName);
+											pageContext.setAttribute("L2fNumber", L2fNumber);
+											pageContext.setAttribute("L2depAirport", L2depAirport);
+											pageContext.setAttribute("L2arrAirport", L2arrAirport);
+											pageContext.setAttribute("L2airFare", L2airFare);
+											pageContext.setAttribute("L2depTime", L2depTime);
+											pageContext.setAttribute("L2travelTime", L2travelTime);
+											pageContext.setAttribute("count", count);
+										
+							%>	
+				
+				
+							  <tr class="row<%= pageContext.getAttribute("count") %>">
+							  	<%if(count == 1){ %>
+							   	 	<td><input type="radio" name="travelBook1" checked value=<%= pageContext.getAttribute("count") %>></td>
+							    <%} else { %>
+							     	<td><input type="radio" name="travelBook1" value=<%= pageContext.getAttribute("count") %>></td>
+							    <%} %>
+							    <td class="airName<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1airName") %><br><%= pageContext.getAttribute("L2airName") %></td> 
+							    <td class="fNumber<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1fNumber") %><br><%= pageContext.getAttribute("L2fNumber") %></td>
+							    <td class="depAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1depAirport") %><br><%= pageContext.getAttribute("L2depAirport") %></td>
+							    <td class="arrAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1arrAirport") %><br><%= pageContext.getAttribute("L2arrAirport") %></td>
+							    <td class="depTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1depTime") %><br><%= pageContext.getAttribute("L2depTime") %></td>
+							    <td class="travelTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1travelTime") %><br><%= pageContext.getAttribute("L2travelTime") %></td>
+							    <td class="airFare<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1airFare") %><br><%= pageContext.getAttribute("L2airFare") %></td>
+							  </tr>
+				  
+						  <%
+						  				++count;
+								} 
+									
+								} catch (SQLException | ClassNotFoundException e) {
+									e.printStackTrace();
+								}	
+							%>
+						</table>	
 				
 				<br>
 				<br>
 				<br>
 				<br>
 				
-				<label> Return Flights</label><br>
-				<table style="width:100%">
-				  <tr>
-				    <th>Airline Name</th> 
-				    <th>Airline Code</th>
-				    <th>Departure City</th>
-				    <th>Arrival City</th>
-				    <th>Departure Time</th>
-				    <th>Arrival Time</th>
-				    <th>Travel Time</th>
-				    <th>Select</th>
-				  </tr>
-				  <tr>
-				    <td>American Airlines</td> 
-				    <td>AA123</td>
-				    <td>New York</td>
-				    <td>London</td>
-				    <td>21:45</td>
-				    <td>06:45</td>
-				    <td>09:00</td>
-					<td><input type="radio" name="travelBook2" checked id="travelBook21" value="1"></td>
-				  </tr>
-				  <tr>
-				    <td>British Airlines</td> 
-				    <td>BA143</td>
-				    <td>London</td>
-				    <td>Chicago</td>
-				    <td>08:45</td>
-				    <td>15:45</td>
-				    <td>07:00</td>
-					<td><input type="radio" name="travelBook2" id="travelBook22" value="2"></td>
-				  </tr>
-				</table>			
-				
+				<% if(! request.getParameter("rDate").equals("")) { %>
+					<h2> Return Flights</h2><br>
+					<table style="width:100%">
+					  <tr>
+					   <th>Select</th>
+						    <th>Airline Name</th> 
+						    <th>Airline Code</th>
+						    <th>Departure Airport</th>
+						    <th>Arrival Airport</th>
+						    <th>Departure Time</th>
+						    <th>Travel Time</th>
+						    <th>Fare</th>
+					  </tr>
+					 
+					 <%
+									
+								url = "jdbc:mysql://msdsdbs.ccnr1cm6zd1l.us-east-2.rds.amazonaws.com:3306/project1";
+								try {
+									Class.forName("com.mysql.jdbc.Driver");
+									Connection con = DriverManager.getConnection(url, "admin", "database");
+									Statement stmt = con.createStatement();
+									
+									String query = "SELECT AR.AirlineName, concat(FL.Airline_Id, '-', FL.Flight_Id) as FlightNumber, FL.DepartureAirport, FL.ArrivalAirport, " +
+											"FL.DepartureTime, FL.TravelTime, FA.AirlineFare FROM Airlines AR, Flights FL, Fare FA  " +
+											"WHERE AR.airline_ID = FL.Airline_Id and FL.Airline_Id = FA.Airline_Id and FL.Flight_Id = FA.Flight_Id AND " +
+											"(lower(FL.DepartureAirport) = '"+ request.getParameter("dCity").toLowerCase() +
+											"' AND lower(FL.ArrivalAirport) = '"+ request.getParameter("oCity").toLowerCase() +
+											"' AND lower(FA.WorkingDay) = lower(DAYNAME('" + request.getParameter("rDate") +"')))";
+									
+									ResultSet result = stmt.executeQuery(query);
+									
+									String airName = "", fNumber = "", depAirport = "", arrAirport = "", depTime = "", travelTime = "", airFare = "";
+									int count = 1;
+									
+									while(result.next()){
+											airName = result.getString(1);
+											fNumber = result.getString(2);
+											depAirport = result.getString(3);
+											arrAirport = result.getString(4);
+											depTime = result.getString(5);
+											travelTime = result.getString(6);
+											airFare = result.getString(7); 
+											
+											pageContext.setAttribute("airName", airName);
+											pageContext.setAttribute("fNumber", fNumber);
+											pageContext.setAttribute("depAirport", depAirport);
+											pageContext.setAttribute("arrAirport", arrAirport);
+											pageContext.setAttribute("depTime", depTime);
+											pageContext.setAttribute("travelTime", travelTime);
+											pageContext.setAttribute("airFare", airFare);
+											pageContext.setAttribute("count", count);
+										
+							%>	
+					  <tr class="row<%= pageContext.getAttribute("count") %>">
+				    		<%if(count == 1){ %>
+						   	 	<td><input type="radio" name="travelBook2" checked value=<%= pageContext.getAttribute("count") %>></td>
+						    <%} else { %>
+						     	<td><input type="radio" name="travelBook2" value=<%= pageContext.getAttribute("count") %>></td>
+						    <%} %>
+						    <td class="airName<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("airName") %></td> 
+						    <td class="fNumber<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("fNumber") %></td>
+						    <td class="depAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("depAirport") %></td>
+						    <td class="arrAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("arrAirport") %></td>
+						    <td class="depTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("depTime") %></td>
+						    <td class="travelTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("travelTime") %></td>
+						    <td class="airFare<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("airFare") %></td>
+					  </tr>
+				  	 	<%
+					  				++count;
+								} 
+
+								
+								query = "Select T1.AirlineName as L1_AirlineName, T1.AirlineCode as L1_AirlineCode, T1.DepartureAirport as L1_DepartureAirport, " +
+										"T1.ArrivalAirport as L1_ArrivalAirport, T1.AirlineFare as L1_AirlineFare, " +
+										"T1.DepartureTime as L1_DepartureTime, T1.TravelTIme as L1_TravelTime, " +
+										"T2.AirlineName as L2_AirlineName, T2.AirlineCode as L2_AirlineCode, T2.DepartureAirport as L2_DepartureAirport, " + 
+										"T2.ArrivalAirport as L2_ArrivalAirport, T2.AirlineFare as L2_AirlineFare, " +
+										"T2.DepartureTime as L2_DepartureTime, T2.TravelTIme as L2_TravelTime from " +
+										"(SELECT AR.AirlineName, concat(FL.Airline_Id, '-', FL.Flight_Id) as AirlineCode, FL.DepartureAirport, " + 
+										"FL.ArrivalAirport, FA.WorkingDay, FA.AirlineFare, FL.DepartureTime, FL.TravelTime " +
+										"FROM Flights FL, Fare FA, Airlines AR " +
+										"WHERE FL.Airline_Id = FA.Airline_Id AND AR.Airline_Id = FL.Airline_Id AND " +
+										"FL.Flight_Id = FA.Flight_Id AND lower(FL.DepartureAirport) = '" + request.getParameter("dCity").toLowerCase() + 
+										"' ) T1, (SELECT AR.AirlineName, concat(FL.Airline_Id, '-', FL.Flight_Id) as AirlineCode, FL.DepartureAirport,  " +
+										"FL.ArrivalAirport, FA.WorkingDay, FA.AirlineFare, FL.DepartureTime, FL.TravelTime " +
+										"FROM Flights FL, Fare FA, Airlines AR WHERE FL.Airline_Id = FA.Airline_Id AND AR.Airline_Id = FL.Airline_Id AND " +
+										"FL.Flight_Id = FA.Flight_Id AND lower(FL.ArrivalAirport) = '" + request.getParameter("oCity").toLowerCase() + 
+										"') T2 where T1.ArrivalAirport = T2.DepartureAirport";
+								
+								result = stmt.executeQuery(query);
+								
+								String L1airName = "", L1fNumber = "", L1depAirport = "", L1arrAirport = "", L1airFare = "", L1depTime = "", L1travelTime = "";
+								String L2airName = "", L2fNumber = "", L2depAirport = "", L2arrAirport = "", L2airFare = "", L2depTime = "", L2travelTime = "";
+								
+								count = 1;
+								
+								while(result.next()){
+										L1airName = result.getString(1);
+										L1fNumber = result.getString(2);
+										L1depAirport = result.getString(3);
+										L1arrAirport = result.getString(4);
+										L1airFare = result.getString(5);
+										L1depTime = result.getString(6);
+										L1travelTime = result.getString(7); 
+										
+										L2airName = result.getString(8);
+										L2fNumber = result.getString(9);
+										L2depAirport = result.getString(10);
+										L2arrAirport = result.getString(11);
+										L2airFare = result.getString(12);
+										L2depTime = result.getString(13);
+										L2travelTime = result.getString(14);
+										
+										pageContext.setAttribute("L1airName", L1airName);
+										pageContext.setAttribute("L1fNumber", L1fNumber);
+										pageContext.setAttribute("L1depAirport", L1depAirport);
+										pageContext.setAttribute("L1arrAirport", L1arrAirport);
+										pageContext.setAttribute("L1airFare", L1airFare);
+										pageContext.setAttribute("L1depTime", L1depTime);
+										pageContext.setAttribute("L1travelTime", L1travelTime);
+										
+										pageContext.setAttribute("L2airName", L2airName);
+										pageContext.setAttribute("L2fNumber", L2fNumber);
+										pageContext.setAttribute("L2depAirport", L2depAirport);
+										pageContext.setAttribute("L2arrAirport", L2arrAirport);
+										pageContext.setAttribute("L2airFare", L2airFare);
+										pageContext.setAttribute("L2depTime", L2depTime);
+										pageContext.setAttribute("L2travelTime", L2travelTime);
+										pageContext.setAttribute("count", count);
+						%>	
+			
+			
+						  <tr class="row<%= pageContext.getAttribute("count") %>">
+						  	<%if(count == 1){ %>
+						   	 	<td><input type="radio" name="travelBook2" checked value=<%= pageContext.getAttribute("count") %>></td>
+						    <%} else { %>
+						     	<td><input type="radio" name="travelBook2" value=<%= pageContext.getAttribute("count") %>></td>
+						    <%} %>
+						    <td class="airName<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1airName") %><br><%= pageContext.getAttribute("L2airName") %></td> 
+						    <td class="fNumber<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1fNumber") %><br><%= pageContext.getAttribute("L2fNumber") %></td>
+						    <td class="depAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1depAirport") %><br><%= pageContext.getAttribute("L2depAirport") %></td>
+						    <td class="arrAirport<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1arrAirport") %><br><%= pageContext.getAttribute("L2arrAirport") %></td>
+						    <td class="depTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1depTime") %><br><%= pageContext.getAttribute("L2depTime") %></td>
+						    <td class="travelTime<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1travelTime") %><br><%= pageContext.getAttribute("L2travelTime") %></td>
+						  	<td class="airFare<%= pageContext.getAttribute("count")%>" ><%= pageContext.getAttribute("L1airFare") %><br><%= pageContext.getAttribute("L2airFare") %></td>
+						   </tr>
+			  
+					  <%
+					  				++count;
+								}
+							} catch (SQLException | ClassNotFoundException e) {
+								e.printStackTrace();
+							}	
+						%>
+					</table>			
+				<%} %>
 				
 				<div class="bookbtn">
 					<button id="bookTktsBtn" class="fullwidthbtn btn">Book</button>
@@ -182,7 +446,7 @@ select {padding:0.5%; margin-right: 5%;}
 		</section>
 	</section>
 	
-	<script src="js/viewFlights.js"></script>
+	<script src="/FlightReservation/js/viewFlights.js"></script>
 	
 </body>
 </html>

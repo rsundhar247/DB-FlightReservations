@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Geek Reservations - My Account</title>
-<script src="js/library/jquery-1.11.1.min.js"></script>
+<script src="/FlightReservation/js/library/jquery-1.11.1.min.js"></script>
 
 <style>
 html {
@@ -71,6 +71,14 @@ nav ul li a:hover{
 
 </head>
 <body>
+
+	<%
+		if(session.getAttribute("userType") == null || ! session.getAttribute("userType").equals("customer")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/");
+		}
+	%>
+	
+	
 	<section class="content">
 	<header>
 		<h1>Geek Users - My Account</h1>
@@ -78,16 +86,16 @@ nav ul li a:hover{
 			<div class="leftnav">
 				<nav>
 					<ul>
-						<li><a href="bookYourTravel">Book your travel</a></li>
-						<li><a href="myAccount">My account</a></li>
-						<li><a href="myBookings">My bookings</a></li>
+						<li><a href="/FlightReservation/customer/bookYourTravel">Book your travel</a></li>
+						<li><a href="/FlightReservation/customer/myAccount">My account</a></li>
+						<li><a href="/FlightReservation/customer/myBookings">My bookings</a></li>
 						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
 			</div>
 			
 			<%
-			
+			if(session.getAttribute("userType") != null && session.getAttribute("userType").equals("customer"))	{
 			String url = "jdbc:mysql://msdsdbs.ccnr1cm6zd1l.us-east-2.rds.amazonaws.com:3306/project1";
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -141,8 +149,6 @@ nav ul li a:hover{
 				e.printStackTrace();
 			}
 
-			
-			
 			%>
 			
 			<div class="row rightNav">
@@ -156,25 +162,25 @@ nav ul li a:hover{
 					 <div class="changeCCform myAcntForm">
 						<div class="row">
 							<label id="CCError" class="error">&nbsp;</label>
-							<%if(! pageContext.getAttribute("nickName").equals("")){ %>
+							<%if(pageContext.getAttribute("nickName") != null && ! pageContext.getAttribute("nickName").equals("")){ %>
 								<input type="text" name="ccNickName" id="ccNickName" value=<%= pageContext.getAttribute("nickName") %> />
 							<%} else{ %>
 								<input type="text" name="ccNickName" id="ccNickName" placeholder="Nick Name" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("ccNumber").equals("")){ %>
+							<%if(pageContext.getAttribute("ccNumber") != null && ! pageContext.getAttribute("ccNumber").equals("")){ %>
 								<input type="number" name="ccNumber" id="ccNumber" value=<%= pageContext.getAttribute("ccNumber") %> />
 							<%} else{ %>
 								<input type="number" name="ccNumber" id="ccNumber" placeholder="Credit Card Number" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("ccCVV").equals("")){ %>
+							<%if(pageContext.getAttribute("ccCVV") != null && ! pageContext.getAttribute("ccCVV").equals("")){ %>
 								<input type="password" name="ccCVV" id="ccCVV" value=<%= pageContext.getAttribute("ccCVV") %> />
 							<%} else{ %>
 								<input type="password" name="ccCVV" id="ccCVV" placeholder="CVV" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("ccExp").equals("")){ %>
+							<%if(pageContext.getAttribute("ccExp") != null && ! pageContext.getAttribute("ccExp").equals("")){ %>
 								<input type="text" name="ccExp" id="ccExp" value=<%= pageContext.getAttribute("ccExp") %> />
 							<%} else{ %>
 								<input type="text" name="ccExp" id="ccExp" placeholder="Expiration Date mm/yy" />
@@ -201,7 +207,6 @@ nav ul li a:hover{
 					</div>
 				</div>
 				
-				
 				<div class="changePassword">
 					<div class="infoarea">
 						<h2 class="info">Change Password</h2>
@@ -219,7 +224,6 @@ nav ul li a:hover{
 					</div>
 				</div>
 				
-				
 				<div class="changeAddress">
 					<div class="infoarea">
 						<h2 class="info">Change Billing Address</h2>
@@ -229,51 +233,51 @@ nav ul li a:hover{
 					 <div class="changeAddressform myAcntForm">
 						<div class="row">
 							<label id="addressError" class="error">&nbsp;</label>
-							<%if(! pageContext.getAttribute("fName").equals("")){ %>
+							<%if(pageContext.getAttribute("fName") != null && ! pageContext.getAttribute("fName").equals("")){ %>
 								<input type="text" name="fName" id="fName" value=<%= pageContext.getAttribute("fName") %> />
 							<%} else{ %>
 								<input type="text" name="fName" id="fName" placeholder="First Name" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("lName").equals("")){ %>
+							<%if(pageContext.getAttribute("lName") != null && ! pageContext.getAttribute("lName").equals("")){ %>
 								<input type="text" name="lName" id="lName" value=<%= pageContext.getAttribute("lName") %> />
 							<%} else{ %>
 								<input type="text" name="lName" id="lName" placeholder="Last Name" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("address").equals("")){ %>
+							<%if(pageContext.getAttribute("address") != null && ! pageContext.getAttribute("address").equals("")){ %>
 								<input type="text" name="address" id="address" value=<%= pageContext.getAttribute("address") %> />
-							<%} else{ %>
+							<%} else{ System.out.println("7"); %>
 								<input type="text" name="address" id="address" placeholder="Address" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("city").equals("")){ %>
+							<%if(pageContext.getAttribute("city") != null && ! pageContext.getAttribute("city").equals("")){ %>
 								<input type="text" name="city" id="city" value=<%= pageContext.getAttribute("city") %> />
 							<%} else{ %>
 								<input type="text" name="city" id="city" placeholder="City" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("country").equals("")){ %>
+							<%if(pageContext.getAttribute("country") != null && ! pageContext.getAttribute("country").equals("")){ %>
 								<input type="text" name="country" id="country" value=<%= pageContext.getAttribute("country") %> />
 							<%} else{ %>
 								<input type="text" name="country" id="country" placeholder="Country" />
 							<%} %>
 							
-							<%if(! pageContext.getAttribute("zipCode").equals("")){ %>
+							<%if(pageContext.getAttribute("zipCode") != null && ! pageContext.getAttribute("zipCode").equals("")){ %>
 								<input type="text" name="zipCode" id="zipCode" value=<%= pageContext.getAttribute("zipCode") %> />
 							<%} else{ %>
 								<input type="text" name="zipCode" id="zipCode" placeholder="ZipCode" />
-							<%} %>
+							<%}
+							} %>
 						</div>
 						<button id="changeAddressBtn" class="fullwidthbtn btn right">Change</button>
 					</div>
 				</div>
-				
 			</div>
 		</section>
 	
 
-	<script src="js/myAccount.js"></script>
+	<script src="/FlightReservation/js/myAccount.js"></script>
 	
 </body>
 </html>

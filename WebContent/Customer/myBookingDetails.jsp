@@ -9,7 +9,6 @@
 <script src="/FlightReservation/js/library/jquery-1.11.1.min.js"></script>
 <link rel="stylesheet" href="/FlightReservation/css/reset.css" />
 <style>
-
 html {
 	background: linear-gradient(#11bab4 ,#fff) no-repeat;
 	height: auto;	
@@ -153,7 +152,8 @@ select {padding:0.5%; margin-right: 5%;}
 		}
 	%>
 
-	<section class="content">
+	<section class="container">
+		<section class="content maincontainer">
 			<header>
 				<h1>Geek Users - Bookings</h1>
 			</header>
@@ -168,22 +168,6 @@ select {padding:0.5%; margin-right: 5%;}
 				</nav>
 			</div>
 			<div class="row rightNav">
-				<div class="bookingsInfo">
-				
-					<br><br><label id="bookIdError" class="error">&nbsp;</label><br><br><br><br>
-					<div class="row">
-						<label for="bookId"> Reservations by Booking Id : </label>
-						<% if(request.getParameter("bookId") != null){ %>
-							<input type="text" name="bookId" id="bookId" value= <%= request.getParameter("bookId") %> />
-						<%} else{ %>
-							<input type="text" name="bookId" id="bookId" placeholder="Booking Id (Axxxx..)" />
-						<%} %>
-						<button id="filterBookingonId" class="fullwidthbtn btn right">Filter</button> <br><br>
-					</div>
-				
-				</div>
-				
-				
 				<div class="flightInfo">
 				
 					<%
@@ -193,31 +177,16 @@ select {padding:0.5%; margin-right: 5%;}
 						Class.forName("com.mysql.jdbc.Driver");
 						Connection con = DriverManager.getConnection(url, "admin", "database");
 						Statement stmt = con.createStatement();
-						String query = "";
-						
-						if(request.getParameter("bookId") != null){
-							query = "Select RD.BookingId, RD.Class, AL.AirlineName, AL.Airline_Id, f.Flight_Id, DATE(R.Date_Of_Flying) as Date_Of_Flying, " + 
-									"R.DepartureCity, R.FinalDestinationCity, f.DepartureAirport, f.ArrivalAirport, TIME_FORMAT(f.DepartureTime, '%h:%i%p'), " +
-									"f.TravelTime, TIME_FORMAT(DATE_ADD(f.DepartureTime, INTERVAL f.TravelTime HOUR), '%h:%i%p') as ArrivalTime,  AR.AirportName from " + 
-									"ReservationDetails RD, Reservations R, Airlines AL, Airports AR, Flights f where " + 
-									"RD.Reservation_Id = R.Reservation_Id and RD.Airline_Id = AL.Airline_Id and " +
-									"f.Airline_Id = AL.Airline_Id and f.Flight_Id = RD.Flight_Id and AR.Airport_Id = f.DepartureAirport " + 
-									"and R.status = 'Paid' and RD.BookingId = '"+ request.getParameter("bookId") +"'" +
-									"and R.Users_Id in (Select Users_Id from Users where lower(EmailAddress) = '" + ((String)session.getAttribute("EmailId")).toLowerCase() + 
-									"')  order by Date_Of_Flying desc";
-						} else{
-						
-							query = "Select RD.BookingId, RD.Class, AL.AirlineName, AL.Airline_Id, f.Flight_Id, DATE(R.Date_Of_Flying) as Date_Of_Flying, " +
-									"R.DepartureCity, R.FinalDestinationCity, f.DepartureAirport, f.ArrivalAirport, TIME_FORMAT(f.DepartureTime, '%h:%i%p'), " +
-											"f.TravelTime, TIME_FORMAT(DATE_ADD(f.DepartureTime, INTERVAL f.TravelTime HOUR), '%h:%i%p') as ArrivalTime,  AR.AirportName from " +
-									"ReservationDetails RD, Reservations R, Airlines AL, Airports AR, Flights f where " + 
-									"RD.Reservation_Id = R.Reservation_Id and RD.Airline_Id = AL.Airline_Id and R.status = 'Paid' and " +
-									"f.Airline_Id = AL.Airline_Id and f.Flight_Id = RD.Flight_Id and AR.Airport_Id = f.DepartureAirport " +
-									"and R.Users_Id in (Select Users_Id from Users where lower(EmailAddress) = '" + ((String)session.getAttribute("EmailId")).toLowerCase() + 
-									"')  order by Date_Of_Flying desc";
-						}
+						String query = "Select RD.BookingId, RD.Class, AL.AirlineName, AL.Airline_Id, f.Flight_Id, DATE(R.Date_Of_Flying) as Date_Of_Flying, " +
+								"R.DepartureCity, R.FinalDestinationCity, f.DepartureAirport, f.ArrivalAirport, f.DepartureTime, f.TravelTime, " +
+								"DATE_ADD(f.DepartureTime, INTERVAL f.TravelTime HOUR) as ArrivalTime,  AR.AirportName from " +
+								"ReservationDetails RD, Reservations R, Airlines AL, Airports AR, Flights f where " + 
+								"RD.Reservation_Id = R.Reservation_Id and RD.Airline_Id = AL.Airline_Id and " +
+								"f.Airline_Id = AL.Airline_Id and f.Flight_Id = RD.Flight_Id and AR.Airport_Id = f.DepartureAirport " +
+								"and R.Users_Id in (Select Users_Id from Users where lower(EmailAddress) = '" + ((String)session.getAttribute("EmailId")).toLowerCase() + "')";
 								
 						ResultSet result = stmt.executeQuery(query);
+						
 						String bookingId = "", seatClass = "", airlineName = "", airlineId = "", flightId = "", dateOfFlying = "", depCity = "";
 						String arrCity = "", depAirport = "", arrAirport = "", depTime = "", travelTime = "", arrTime = "", depAirportName = "";
 						
@@ -301,23 +270,7 @@ select {padding:0.5%; margin-right: 5%;}
 				
 				</div>
 			</div>
+		</section>
 	</section>
-	
-	<script>
-	$(document).ready(function(){
-		$('#filterBookingonId').on("click", function(){
-			var bookId = $("#bookId").val();
-			
-			if(!bookId){
-				$('#bookIdError').text("Booking Id is mandatory");
-				return false;
-			} else {
-				$('#bookIdError').text("");
-			}
-			
-	        window.location = "http://localhost:8080/FlightReservation/customer/myBookings?bookId="+bookId;
-		});
-	});
-	</script>
 </body>
 </html>

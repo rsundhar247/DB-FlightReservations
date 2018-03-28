@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Geek Reservations - Book Your Travel</title>
-<script src="js/library/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" href="css/reset.css" />
+<script src="/FlightReservation/js/library/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="/FlightReservation/css/reset.css" />
 <style>
 html {
 	background: linear-gradient(#11bab4 ,#fff) no-repeat;
@@ -83,6 +83,17 @@ select {padding:0.5%; margin-right: 5%;}
 </style>
 </head>
 <body>
+
+	<%
+	
+		if(session.getAttribute("userType") != null && session.getAttribute("userType").equals("manager")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/manager/viewCustomers");
+		}	
+		if(session.getAttribute("userType") == null || ! session.getAttribute("userType").equals("customer")) {
+			response.sendRedirect("http://localhost:8080/FlightReservation/");
+		}
+	%>
+	
 	<section class="container">
 		<header>
 			<h1>Geek Users Book Your Travel</h1>
@@ -91,9 +102,9 @@ select {padding:0.5%; margin-right: 5%;}
 			<div class="leftnav">
 				<nav>
 					<ul>
-						<li><a href="bookYourTravel">Book your travel</a></li>
-						<li><a href="myAccount">My account</a></li>
-						<li><a href="myBookings">My bookings</a></li>
+						<li><a href="/FlightReservation/customer/bookYourTravel">Book your travel</a></li>
+						<li><a href="/FlightReservation/customer/myAccount">My account</a></li>
+						<li><a href="/FlightReservation/customer/myBookings">My bookings</a></li>
 						<li><a href="/FlightReservation/">Log Off</a></li>
 					</ul>
 				</nav>
@@ -110,8 +121,8 @@ select {padding:0.5%; margin-right: 5%;}
 						</div>
 						<div class="travelForm">
 							<div class="citySelect">
-								<input type="text" name="originCity" id="originCity" placeholder="Origin City" />
-								<input type="text" name="destinationCity" id="destinationCity" placeholder="Destination City" />
+								<input type="text" name="originCity" id="originCity" placeholder="Origin Airport Code (JFK/..)" />
+								<input type="text" name="destinationCity" id="destinationCity" placeholder="Destination Airport Code (EWR/..)" />
 							</div>
 							<div class="dateSelect">
 								<label for="depDate" class="date">Departure Date :</label> <input type="date" name="depDate" id="depDate"> <br/>
@@ -123,7 +134,7 @@ select {padding:0.5%; margin-right: 5%;}
 									<option value="Economy">Economy</option>
 									<option value="First Class">First Class</option>
 								</select>
-								<label for="adultTkts">Adults(18+) : </label>
+								<label for="adultTkts">Number of Tickets : </label>
 							<select name="adultTkts" id="adultTkts"">
 								<option value="1">1</option>
 								<option value="2">2</option>
@@ -137,14 +148,6 @@ select {padding:0.5%; margin-right: 5%;}
 								<option value="10">10</option>
 							</select>
 
-							<label for="childTkts">Children(0-17) : </label>
-							<select name="childTkts" id="childTkts">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
 							</div>
 							<div class="bookbtn">
 								<button id="bookTkts" class="fullwidthbtn btn">Book</button>
@@ -156,7 +159,7 @@ select {padding:0.5%; margin-right: 5%;}
 		</section>
 	</section>
 	
-	<script src="js/bookYourTravel.js"></script>
+	<script src="/FlightReservation/js/bookYourTravel.js"></script>
 	
 </body>
 <script>

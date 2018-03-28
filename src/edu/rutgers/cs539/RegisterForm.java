@@ -45,7 +45,7 @@ public class RegisterForm extends HttpServlet {
 		String custLastname = request.getParameter("custLastname");
 		String custemail = request.getParameter("custemail");
 		String userpwd = request.getParameter("userpwd");
-		String userType = "B"; //request.getParameter("userType");
+		String userType = "customer"; //request.getParameter("userType");
 		String phone = request.getParameter("phone");
 		String url = "jdbc:mysql://msdsdbs.ccnr1cm6zd1l.us-east-2.rds.amazonaws.com:3306/project1";
 
@@ -85,6 +85,7 @@ public class RegisterForm extends HttpServlet {
 					
 					HttpSession session = request.getSession();
 					session.setAttribute("EmailId", custemail.toLowerCase());
+					session.setAttribute("userType", userType.toLowerCase());
 				} else {
 					System.out.println("Error Occured. Try again later.");
 					json = new Gson().toJson("Error Occured. Try again later.");

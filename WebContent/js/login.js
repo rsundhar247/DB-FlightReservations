@@ -28,7 +28,7 @@ $(document).ready(function(){
 	        success: function(data){
 	        	if(data != null){
 	        		if(data == "Customer Login Successful"){
-	        			window.location = "http://localhost:8080/FlightReservation/myAccount";
+	        			window.location = "http://localhost:8080/FlightReservation/customer/myAccount";
 	        		} else if(data == "Manager Login Successful"){
 	        			window.location = "http://localhost:8080/FlightReservation/manager/viewCustomers";
 	        		} else if(data == "Not Successful"){
@@ -112,7 +112,7 @@ $(document).ready(function(){
 	        success: function(data){
 	        	if(data != null){
 	        		if(data == "User Created."){
-	        			window.location = "http://localhost:8080/FlightReservation/myAccount";
+	        			window.location = "http://localhost:8080/FlightReservation/customer/myAccount";
 	        		} else if(data == "EmailId already Present. Please try with different EmailId."){
 	        			document.getElementById("regErrorMsg").innerHTML = "EmailId already Present. Please try with different EmailId.";
 	        		} else if(data == "Error Occured. Try again later."){

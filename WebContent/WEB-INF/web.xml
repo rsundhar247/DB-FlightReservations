@@ -30,7 +30,7 @@
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>MyAccountServlet</servlet-name>
-    	<url-pattern>/MyAccountDetails</url-pattern>
+    	<url-pattern>/customer/MyAccountDetails</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -39,7 +39,7 @@
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>BookTravelServlet</servlet-name>
-    	<url-pattern>/BookTravel</url-pattern>
+    	<url-pattern>/customer/BookTravel</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -48,7 +48,7 @@
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>FlightsReservationServlet</servlet-name>
-    	<url-pattern>/FlightsReservation</url-pattern>
+    	<url-pattern>/customer/FlightsReservation</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -60,52 +60,61 @@
     	<url-pattern>/manager/EditCustomer</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+    	<servlet-name>MyCartServlet</servlet-name>
+    	<servlet-class>edu.rutgers.cs539.MyCart</servlet-class>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>MyCartServlet</servlet-name>
+    	<url-pattern>/customer/MyCartServlet</url-pattern>
+	</servlet-mapping>
+	
 		
 	
 	
 	<servlet>
     	<servlet-name>MyAccountJSP</servlet-name>
-    	<jsp-file>/myAccount.jsp</jsp-file>
+    	<jsp-file>/Customer/myAccount.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>MyAccountJSP</servlet-name>
-    	<url-pattern>/myAccount</url-pattern>
+    	<url-pattern>/customer/myAccount</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
     	<servlet-name>BookYourTravelJSP</servlet-name>
-    	<jsp-file>/bookYourTravel.jsp</jsp-file>
+    	<jsp-file>/Customer/bookYourTravel.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>BookYourTravelJSP</servlet-name>
-    	<url-pattern>/bookYourTravel</url-pattern>
+    	<url-pattern>/customer/bookYourTravel</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
     	<servlet-name>MyBookingsJSP</servlet-name>
-    	<jsp-file>/myBookings.jsp</jsp-file>
+    	<jsp-file>/Customer/myBookings.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>MyBookingsJSP</servlet-name>
-    	<url-pattern>/myBookings</url-pattern>
+    	<url-pattern>/customer/myBookings</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
     	<servlet-name>ViewFlightsJSP</servlet-name>
-    	<jsp-file>/viewFlights.jsp</jsp-file>
+    	<jsp-file>/Customer/viewFlights.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>ViewFlightsJSP</servlet-name>
-    	<url-pattern>/viewFlights</url-pattern>
+    	<url-pattern>/customer/viewFlights</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
     	<servlet-name>MyCartJSP</servlet-name>
-    	<jsp-file>/myCart.jsp</jsp-file>
+    	<jsp-file>/Customer/myCart.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
     	<servlet-name>MyCartJSP</servlet-name>
-    	<url-pattern>/myCart</url-pattern>
+    	<url-pattern>/customer/myCart</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
