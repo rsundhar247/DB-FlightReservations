@@ -41,6 +41,7 @@ public class FlightsReservation extends HttpServlet{
 		String aTkts = request.getParameter("aTkts");
 		String pClass = request.getParameter("pClass");
 		String dDate = request.getParameter("dDate");
+		String rDate = request.getParameter("rDate");
 		
 		String fNumberDep = request.getParameter("fNumberDep");
 		//String airNameDep = request.getParameter("airNameDep");
@@ -72,7 +73,6 @@ public class FlightsReservation extends HttpServlet{
 				query = "Insert into Reservations values("+resId+", (Select Users_Id from Users where EmailAddress='"+ emailId + "'), NOW(), " +
 						(airFare * 0.833) + "," + airFare + "," + Integer.parseInt(aTkts) + ", (Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportDep + "')" +
 						", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportDep + "'), '" + dDate + "', 'Initiate')";
-				System.out.println("1 :: " + query);
 				stmt.executeUpdate(query);
 				
 				
@@ -80,7 +80,6 @@ public class FlightsReservation extends HttpServlet{
 						"(Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportDep + "')" +
 						", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportDep + "'), " + airFare +
 						", " + (airFare * 0.833) + ", " + bookId + ", '" + pClass + "')";
-				System.out.println("2 :: " + query);
 				stmt.executeUpdate(query);
 				
 				if(response1.equals("")) {
@@ -108,7 +107,6 @@ public class FlightsReservation extends HttpServlet{
 					query = "Insert into Reservations values("+resId+", (Select Users_Id from Users where EmailAddress='"+ emailId + "'), NOW(), " +
 							(airFare * 0.833) + "," + airFare + "," + Integer.parseInt(aTkts) + ", (Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportDepArr[i] + "')" +
 							", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportDepArr[i] + "'), '" + dDate + "', 'Initiate')";
-					System.out.println(i+"1 :: " + query);
 					stmt.executeUpdate(query);
 					
 					
@@ -116,7 +114,6 @@ public class FlightsReservation extends HttpServlet{
 							"(Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportDepArr[i] + "')" +
 							", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportDepArr[i] + "'), " + airFare +
 							", " + (airFare * 0.833) + ", " + bookId + ", '" + pClass + "')";
-					System.out.println(i+"2 :: " + query);
 					stmt.executeUpdate(query);
 					
 					if(response1.equals("")) {
@@ -150,8 +147,7 @@ public class FlightsReservation extends HttpServlet{
 						
 						query = "Insert into Reservations values("+resId+", (Select Users_Id from Users where EmailAddress='"+ emailId + "'), NOW(), " +
 								(airFare * 0.833) + "," + airFare + "," + Integer.parseInt(aTkts) + ", (Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportRet + "')" +
-								", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportRet + "'), '" + dDate + "', 'Initiate')";
-						System.out.println("1 :: " + query);
+								", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportRet + "'), '" + rDate + "', 'Initiate')";
 						stmt.executeUpdate(query);
 						
 						
@@ -159,7 +155,6 @@ public class FlightsReservation extends HttpServlet{
 								"(Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportRet + "')" +
 								", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportRet + "'), " + airFare +
 								", " + (airFare * 0.833) + ", " + bookId + ", '" + pClass + "')";
-						System.out.println("2 :: " + query);
 						stmt.executeUpdate(query);
 						
 						if(response1.equals("")) {
@@ -187,7 +182,6 @@ public class FlightsReservation extends HttpServlet{
 							query = "Insert into Reservations values("+resId+", (Select Users_Id from Users where EmailAddress='"+ emailId + "'), NOW(), " +
 									(airFare * 0.833) + "," + airFare + "," + Integer.parseInt(aTkts) + ", (Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportRetArr[i] + "')" +
 									", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportRetArr[i] + "'), '" + dDate + "', 'Initiate')";
-							System.out.println(i+"1 :: " + query);
 							stmt.executeUpdate(query);
 							
 							
@@ -195,7 +189,6 @@ public class FlightsReservation extends HttpServlet{
 									"(Select distinct DepartureCity from Flights where DepartureAirport='" + depAirportRetArr[i] + "')" +
 									", (Select distinct ArrivalCity from Flights where ArrivalAirport='" + arrAirportRetArr[i] + "'), " + airFare +
 									", " + (airFare * 0.833) + ", " + bookId + ", '" + pClass + "')";
-							System.out.println(i+"2 :: " + query);
 							stmt.executeUpdate(query);
 							
 							if(response1.equals("")) {

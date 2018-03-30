@@ -234,7 +234,7 @@ select {padding:0.5%; margin-right: 5%;}
 		        },
 		        success: function(data){
 		        	if(data == "Paid"){
-		        		document.getElementById("bookTktsError").innerHTML = "Paid";
+		        		window.location = "http://localhost:8080/FlightReservation/customer/myBookings?resId="+resId;
 		        	} else{
 	        			document.getElementById("bookTktsError").innerHTML = "Payment Declined";
 	        		}

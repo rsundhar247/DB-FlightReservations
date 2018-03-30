@@ -205,6 +205,16 @@ select {padding:0.5%; margin-right: 5%;}
 									"and R.status = 'Paid' and RD.BookingId = '"+ request.getParameter("bookId") +"'" +
 									"and R.Users_Id in (Select Users_Id from Users where lower(EmailAddress) = '" + ((String)session.getAttribute("EmailId")).toLowerCase() + 
 									"')  order by Date_Of_Flying desc";
+						} else if(request.getParameter("resId") != null){
+							query = "Select RD.BookingId, RD.Class, AL.AirlineName, AL.Airline_Id, f.Flight_Id, DATE(R.Date_Of_Flying) as Date_Of_Flying, " + 
+									"R.DepartureCity, R.FinalDestinationCity, f.DepartureAirport, f.ArrivalAirport, TIME_FORMAT(f.DepartureTime, '%h:%i%p'), " +
+									"f.TravelTime, TIME_FORMAT(DATE_ADD(f.DepartureTime, INTERVAL f.TravelTime HOUR), '%h:%i%p') as ArrivalTime,  AR.AirportName from " + 
+									"ReservationDetails RD, Reservations R, Airlines AL, Airports AR, Flights f where " + 
+									"RD.Reservation_Id = R.Reservation_Id and RD.Airline_Id = AL.Airline_Id and " +
+									"f.Airline_Id = AL.Airline_Id and f.Flight_Id = RD.Flight_Id and AR.Airport_Id = f.DepartureAirport " + 
+									"and R.status = 'Paid' and RD.Reservation_Id IN ("+ request.getParameter("resId") +")" +
+									"and R.Users_Id in (Select Users_Id from Users where lower(EmailAddress) = '" + ((String)session.getAttribute("EmailId")).toLowerCase() + 
+									"')  order by Date_Of_Flying desc";
 						} else{
 						
 							query = "Select RD.BookingId, RD.Class, AL.AirlineName, AL.Airline_Id, f.Flight_Id, DATE(R.Date_Of_Flying) as Date_Of_Flying, " +

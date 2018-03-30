@@ -4,6 +4,7 @@ $(document).ready(function(){
 		var emailId = $("#sessionEmail").val();
 		var aTkts = $("#aTkts").val();
 		var dDate = $("#dDate").val();
+		var rDate = $("#rDate").val();
 		var pClass = $("#pClass").val();
 		
 		
@@ -19,13 +20,13 @@ $(document).ready(function(){
 		
 		if (document.getElementsByName("travelBook2")) {
 			var radioBtnRet = $('input[name=travelBook2]:checked').val();
-			var airNameRet = $('tr.row'+radioBtnRet+' td.airName'+radioBtnRet).html();
-			var fNumberRet = $('tr.row'+radioBtnRet+' td.fNumber'+radioBtnRet).html();
-			var depAirportRet = $('tr.row'+radioBtnRet+' td.depAirport'+radioBtnRet).html();
-			var arrAirportRet = $('tr.row'+radioBtnRet+' td.arrAirport'+radioBtnRet).html();
-			var airFareRet = $('tr.row'+radioBtnRet+' td.airFare'+radioBtnRet).html();
-			var depTimeRet = $('tr.row'+radioBtnRet+' td.depTime'+radioBtnRet).html();
-			var travelTimeRet = $('tr.row'+radioBtnRet+' td.travelTime'+radioBtnRet).html();
+			var airNameRet = $('tr.rowR'+radioBtnRet+' td.airNameR'+radioBtnRet).html();
+			var fNumberRet = $('tr.rowR'+radioBtnRet+' td.fNumberR'+radioBtnRet).html();
+			var depAirportRet = $('tr.rowR'+radioBtnRet+' td.depAirportR'+radioBtnRet).html();
+			var arrAirportRet = $('tr.rowR'+radioBtnRet+' td.arrAirportR'+radioBtnRet).html();
+			var airFareRet = $('tr.rowR'+radioBtnRet+' td.airFareR'+radioBtnRet).html();
+			var depTimeRet = $('tr.rowR'+radioBtnRet+' td.depTimeR'+radioBtnRet).html();
+			var travelTimeRet = $('tr.rowR'+radioBtnRet+' td.travelTimeR'+radioBtnRet).html();
 		}
 		
 		$.ajax({
@@ -36,6 +37,7 @@ $(document).ready(function(){
 	        	aTkts: aTkts,
 	        	pClass: pClass,
 	        	dDate: dDate,
+	        	rDate: rDate,
 	        	
 	        	fNumberDep: fNumberDep,
 	        	airNameDep: airNameDep,

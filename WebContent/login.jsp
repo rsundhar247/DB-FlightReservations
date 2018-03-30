@@ -46,11 +46,6 @@ html {
 						</div>
 						<button id="loginBtn" class="fullwidthbtn btn">Log In</button>
 						
-						<form name="forgotPwdForm" action="ForgotPassword" method="">
-							<div class="row">
-								<a class="link" href="#">Forgot Password?</a>
-							</div>
-						</form>
 					</div>
 				</div>
 				<div class="signupArea">
