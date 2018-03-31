@@ -118,6 +118,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+    	<servlet-name>BestSellingJSP</servlet-name>
+    	<jsp-file>/Customer/bestSelling.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+    	<servlet-name>BestSellingJSP</servlet-name>
+    	<url-pattern>/customer/bestSelling</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
     	<servlet-name>ViewCustomersJSP</servlet-name>
     	<jsp-file>/Manager/viewCustomers.jsp</jsp-file>
 	</servlet>
